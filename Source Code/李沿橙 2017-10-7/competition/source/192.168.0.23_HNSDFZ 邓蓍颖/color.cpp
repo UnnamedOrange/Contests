@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+int rabit[30100],n,m,ans,k,color[30100];bool special2=true;
+int main()
+{
+	freopen("color.in","r",stdin);
+	freopen("color.out","w",stdout);
+	int i,a,b,want,j;
+	scanf("%d%d",&n,&m);
+	for(i=1;i<=n;i++)
+	{
+		scanf("%d",&rabit[i]);
+		color[rabit[i]]++;
+		if(color[rabit[i]]>1)special2=false;
+	}
+	if(special2)
+	{
+		for(i=1;i<=m;i++)
+		{
+			scanf("%d",&a);
+			if(a==1)
+			{
+				scanf("%d%d%d",&a,&b,&want);
+				printf("1");
+			}
+			else scanf("%d",&b);
+		}
+	}
+	else
+	{
+		for(i=1;i<=m;i++)
+		{
+			scanf("%d",&a);
+			if(a==1)
+			{
+				scanf("%d%d%d",&a,&b,&want);
+				if(abs(a-b)>n/2+5)
+				{
+					ans=0;
+					if(a>b)
+					{
+						k=a;
+						a=b;
+						b=k;
+					}
+					for(j=1;j<a;j++)if(rabit[j]==want)ans++;
+					for(j=b+1;j<=n;j++)if(rabit[j]==want)ans++;
+					ans=color[want]-ans;	
+				}
+				else 
+				{
+					ans=0;
+					for(j=a;j<=b;j++)if(rabit[j]==want)ans++;
+					printf("%d\n",ans);
+				}
+			}
+			else
+			{
+				scanf("%d",&b);
+				want=rabit[b+1];
+				rabit[b+1]=rabit[b];
+				rabit[b]=want;
+			}
+		}
+	}
+	fclose(stdin);
+	fclose(stdout);
+	return 0;
+}

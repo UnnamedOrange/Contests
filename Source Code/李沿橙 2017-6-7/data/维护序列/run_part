@@ -1,0 +1,51 @@
+#line 1 "Run Part"
+try{func::compile(func::range(_I_(new v_int(0)),_I_(new v_int(10))),_v_submission[_I_(new v_str("SRC"))],_I_(new v_str("SRC")),_I_(new v_str("EXE")));}LINE_CAT("1")
+#line 2 "Run Part"
+try{_v_length=func::len(func::read(_I_(new v_str("SRC"))));}LINE_CAT("2")
+ for (_v_i=_I_(new v_int(0));_v_i<_I_(new v_int(10));_v_i++)
+#line 3 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("codeLength"))][_I_(new v_str("SRC"))]=_v_length;}LINE_CAT("3")
+ if (_v_length>_I_(new v_int(50))*_I_(new v_int(1024)))
+{
+ for (_v_i=_I_(new v_int(0));_v_i<_I_(new v_int(10));_v_i++)
+{
+#line 4 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("status"))]=_I_(new v_str("compile error"));}LINE_CAT("4")
+#line 4 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("message"))]=_I_(new v_str("the code is too long."));}LINE_CAT("4")
+
+}
+ throw user_error() ;
+
+}
+ for (_v_i=_I_(new v_int(0));_v_i<_I_(new v_int(10));_v_i++)
+ try 
+{
+#line 6 "Run Part"
+try{func::exec(_v_i,_I_(new v_str("EXE")),_v_input[_v_i],_v_userOut[_v_i]);}LINE_CAT("6")
+#line 7 "Run Part"
+try{_v_diff_ret=func::diff(_v_userOut[_v_i],_v_output[_v_i]);}LINE_CAT("7")
+ if (_v_diff_ret[_I_(new v_str("verdict"))])
+{
+#line 9 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("status"))]=_I_(new v_str("wrong answer"));}LINE_CAT("9")
+#line 10 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("score"))]=_I_(new v_int(0));}LINE_CAT("10")
+#line 11 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("message"))]=_I_(new v_str("diff : "))+_v_diff_ret[_I_(new v_str("first_diff"))][_I_(new v_str("f1"))]+_I_(new v_str(" : "))+_v_diff_ret[_I_(new v_str("first_diff"))][_I_(new v_str("f2"))];}LINE_CAT("11")
+
+}
+ else 
+{
+#line 13 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("status"))]=_I_(new v_str("accepted"));}LINE_CAT("13")
+#line 14 "Run Part"
+try{_v_result[_v_i][_I_(new v_str("score"))]=_v_score[_v_i];}LINE_CAT("14")
+
+}
+
+}
+ catch(user_error) 
+{
+
+}

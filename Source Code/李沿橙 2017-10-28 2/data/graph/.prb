@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="TRA_0_4" maker="ccr-plus">
+    <source dir="graph" code="100" file="graph">
+        <language cmd="gcc -o graph graph.c -lm -static -static" time="10" file="graph.c"/>
+        <language cmd="g++ -o graph graph.cpp -lm -static -static" time="10" file="graph.cpp"/>
+        <language cmd="fpc graph.pas" time="10" file="graph.pas"/>
+    </source>
+    <task time="10" checker="fulltext" input="graph.in" output="graph.out">
+        <subtask score="5">
+            <point out="graph1.out" in="graph1.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph2.out" in="graph2.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph3.out" in="graph3.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph4.out" in="graph4.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph5.out" in="graph5.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph6.out" in="graph6.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph7.out" in="graph7.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph8.out" in="graph8.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph9.out" in="graph9.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph10.out" in="graph10.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph11.out" in="graph11.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph12.out" in="graph12.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph13.out" in="graph13.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph14.out" in="graph14.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph15.out" in="graph15.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph16.out" in="graph16.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph17.out" in="graph17.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph18.out" in="graph18.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph19.out" in="graph19.in" mem="64" time="1"/>
+        </subtask>
+        <subtask score="5">
+            <point out="graph20.out" in="graph20.in" mem="64" time="1"/>
+        </subtask>
+    </task>
+</problem>

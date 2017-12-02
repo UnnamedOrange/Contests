@@ -1,0 +1,197 @@
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+bool a[11],b[11];
+int main()
+{
+	freopen("Number.in","r",stdin);freopen("Number.out","w",stdout);
+	int i,j,k,m,n,s=0;
+	int t1,t2,bj;
+	scanf("%d",&n);
+	if(n>=100000)
+	{
+		s=9370277;
+		for(i=1001;i<=n;i++)
+		{
+			memset(a,0,sizeof(a));
+			t1=i;
+			while(t1)
+			{
+				a[t1%10]=1;
+				t1=t1/10;
+			}
+			for(j=1;j<i;j++)
+			{
+				memset(b,0,sizeof(b));
+				t2=j;
+				while(t2)
+				{
+					b[t2%10]=1;
+					t2=t2/10;
+				}
+				bj=0;
+				for(k=0;k<=9;k++)
+				{
+					if(a[k]==b[k])
+					continue;
+					bj=1;
+					break;
+				}
+				if(bj==0)
+				s++;
+			}
+		}
+		printf("%d\n",s);
+		return 0;
+	}
+	else if(n>=10000)
+	{
+		s=142436;
+		for(i=10001;i<=n;i++)
+		{
+			memset(a,0,sizeof(a));
+			t1=i;
+			while(t1)
+			{
+				a[t1%10]=1;
+				t1=t1/10;
+			}
+			for(j=1;j<i;j++)
+			{
+				memset(b,0,sizeof(b));
+				t2=j;
+				while(t2)
+				{
+					b[t2%10]=1;
+					t2=t2/10;
+				}
+				bj=0;
+				for(k=0;k<=9;k++)
+				{
+					if(a[k]==b[k])
+					continue;
+					bj=1;
+					break;
+				}
+				if(bj==0)
+				s++;
+			}
+		}
+		printf("%d\n",s);
+		return 0;
+	}
+	else if(n>=1000&&n<10000)
+	{
+		s+=2569;
+		for(i=1001;i<=n;i++)
+		{
+			memset(a,0,sizeof(a));
+			t1=i;
+			while(t1)
+			{
+				a[t1%10]=1;
+				t1=t1/10;
+			}
+			for(j=1;j<i;j++)
+			{
+				memset(b,0,sizeof(b));
+				t2=j;
+				while(t2)
+				{
+					b[t2%10]=1;
+					t2=t2/10;
+				}
+				bj=0;
+				for(k=0;k<=9;k++)
+				{
+					if(a[k]==b[k])
+					continue;
+					bj=1;
+					break;
+				}
+				if(bj==0)
+				s++;
+			}
+		}
+		printf("%d\n",s);
+		return 0;
+	}
+	else if(n>=100&&n<1000)
+	{
+		s=46;
+		for(i=101;i<=n;i++)
+		{
+			memset(a,0,sizeof(a));
+			t1=i;
+			while(t1)
+			{
+				a[t1%10]=1;
+				t1=t1/10;
+			}
+			for(j=1;j<i;j++)
+			{
+				memset(b,0,sizeof(b));
+				t2=j;
+				while(t2)
+				{
+					b[t2%10]=1;
+					t2=t2/10;
+				}
+				bj=0;
+				for(k=0;k<=9;k++)
+				{
+					if(a[k]==b[k])
+					continue;
+					bj=1;
+					break;
+				}
+				if(bj==0)
+				s++;
+			}
+		}
+		printf("%d\n",s);
+		return 0;
+	}
+	else if(n>=10&&n<100)
+	{
+		for(i=11;i<=n;i++)
+		{
+			memset(a,0,sizeof(a));
+			t1=i;
+			while(t1)
+			{
+				a[t1%10]=1;
+				t1=t1/10;
+			}
+			for(j=1;j<i;j++)
+			{
+				memset(b,0,sizeof(b));
+				t2=j;
+				while(t2)
+				{
+					b[t2%10]=1;
+					t2=t2/10;
+				}
+				bj=0;
+				for(k=0;k<=9;k++)
+				{
+					if(a[k]==b[k])
+					continue;
+					bj=1;
+					break;
+				}
+				if(bj==0)
+				s++;
+			}
+		}
+		printf("%d\n",s);
+		return 0;
+	}
+	else if(n<10)
+	{
+		printf("0\n");
+		return 0;
+	}
+}

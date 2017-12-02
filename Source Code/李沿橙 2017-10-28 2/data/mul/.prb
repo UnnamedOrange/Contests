@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem type="TRA_0_4" maker="ccr-plus">
+    <source dir="mul" code="100" file="mul">
+        <language cmd="gcc -o mul mul.c -lm -static -static" time="10" file="mul.c"/>
+        <language cmd="g++ -o mul mul.cpp -lm -static -static" time="10" file="mul.cpp"/>
+        <language cmd="fpc mul.pas" time="10" file="mul.pas"/>
+    </source>
+    <task time="10" checker="fulltext" input="mul.in" output="mul.out">
+        <subtask score="5">
+            <point out="mul1.out" in="mul1.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul2.out" in="mul2.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul3.out" in="mul3.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul4.out" in="mul4.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul5.out" in="mul5.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul6.out" in="mul6.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul7.out" in="mul7.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul8.out" in="mul8.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul9.out" in="mul9.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul10.out" in="mul10.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul11.out" in="mul11.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul12.out" in="mul12.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul13.out" in="mul13.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul14.out" in="mul14.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul15.out" in="mul15.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul16.out" in="mul16.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul17.out" in="mul17.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul18.out" in="mul18.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul19.out" in="mul19.in" mem="64" time="2"/>
+        </subtask>
+        <subtask score="5">
+            <point out="mul20.out" in="mul20.in" mem="64" time="2"/>
+        </subtask>
+    </task>
+</problem>

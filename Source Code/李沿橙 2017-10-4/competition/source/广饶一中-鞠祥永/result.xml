@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cena version="0.8.1"><result judgetime="43012.4578997917"><problem title="biology" filename="biology.cpp" status="1" hash="1572753770" detail="KZLLVCZJ.cpp:3: warning: converting to `int' from `double'&#13;&#10;KZLLVCZJ.cpp:4: warning: converting to `int' from `double'&#13;&#10;KZLLVCZJ.cpp:5: warning: converting to `int' from `double'&#13;&#10;"><testcase status="2" exitcode="193" detail="" time="0.01" memory="236" score="0"/></problem></result></cena>

@@ -1,0 +1,544 @@
+#line 2 "Initialization Part"
+try{_v_filemode[_I_(new v_int(2))][_I_(new v_str("SRC"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("language")))->as_str(),_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("c")))->as_str(),_I_(new v_bool(true)))).add(std::pair<std::string,iter>((_I_(new v_str("c++")))->as_str(),_I_(new v_bool(true)))).add(std::pair<std::string,iter>((_I_(new v_str("c++11")))->as_str(),_I_(new v_bool(true)))).add(std::pair<std::string,iter>((_I_(new v_str("pascal")))->as_str(),_I_(new v_bool(true))))));}LINE_CAT("2")
+#line 3 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("source")))->as_str(),_I_(new v_str("SRC")))).add(std::pair<std::string,iter>((_I_(new v_str("time")))->as_str(),_I_(new v_list()))).add(std::pair<std::string,iter>((_I_(new v_str("memory")))->as_str(),_I_(new v_list())));}LINE_CAT("3")
+#line 5 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data1.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(0))));}LINE_CAT("5")
+#line 6 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data1.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(0))));}LINE_CAT("6")
+#line 7 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(0))]=_I_(new v_int(1000));}LINE_CAT("7")
+#line 8 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(0))]=_I_(new v_int(65536));}LINE_CAT("8")
+#line 9 "Initialization Part"
+try{_v_input[_I_(new v_int(0))]=_I_(new v_str("data1.in"));}LINE_CAT("9")
+#line 10 "Initialization Part"
+try{_v_output[_I_(new v_int(0))]=_I_(new v_str("data1.out"));}LINE_CAT("10")
+#line 11 "Initialization Part"
+try{_v_score[_I_(new v_int(0))]=_I_(new v_float(3.3333333333333));}LINE_CAT("11")
+#line 12 "Initialization Part"
+try{_v_userOut[_I_(new v_int(0))]=_I_(new v_str("data.out"));}LINE_CAT("12")
+#line 13 "Initialization Part"
+try{_v_userIn[_I_(new v_int(0))]=_I_(new v_str("data.in"));}LINE_CAT("13")
+#line 15 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data10.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(1))));}LINE_CAT("15")
+#line 16 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data10.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(1))));}LINE_CAT("16")
+#line 17 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(1))]=_I_(new v_int(1000));}LINE_CAT("17")
+#line 18 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(1))]=_I_(new v_int(65536));}LINE_CAT("18")
+#line 19 "Initialization Part"
+try{_v_input[_I_(new v_int(1))]=_I_(new v_str("data10.in"));}LINE_CAT("19")
+#line 20 "Initialization Part"
+try{_v_output[_I_(new v_int(1))]=_I_(new v_str("data10.out"));}LINE_CAT("20")
+#line 21 "Initialization Part"
+try{_v_score[_I_(new v_int(1))]=_I_(new v_float(3.3333333333333));}LINE_CAT("21")
+#line 22 "Initialization Part"
+try{_v_userOut[_I_(new v_int(1))]=_I_(new v_str("data.out"));}LINE_CAT("22")
+#line 23 "Initialization Part"
+try{_v_userIn[_I_(new v_int(1))]=_I_(new v_str("data.in"));}LINE_CAT("23")
+#line 25 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data11.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(2))));}LINE_CAT("25")
+#line 26 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data11.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(2))));}LINE_CAT("26")
+#line 27 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(2))]=_I_(new v_int(1000));}LINE_CAT("27")
+#line 28 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(2))]=_I_(new v_int(65536));}LINE_CAT("28")
+#line 29 "Initialization Part"
+try{_v_input[_I_(new v_int(2))]=_I_(new v_str("data11.in"));}LINE_CAT("29")
+#line 30 "Initialization Part"
+try{_v_output[_I_(new v_int(2))]=_I_(new v_str("data11.out"));}LINE_CAT("30")
+#line 31 "Initialization Part"
+try{_v_score[_I_(new v_int(2))]=_I_(new v_float(3.3333333333333));}LINE_CAT("31")
+#line 32 "Initialization Part"
+try{_v_userOut[_I_(new v_int(2))]=_I_(new v_str("data.out"));}LINE_CAT("32")
+#line 33 "Initialization Part"
+try{_v_userIn[_I_(new v_int(2))]=_I_(new v_str("data.in"));}LINE_CAT("33")
+#line 35 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data12.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(3))));}LINE_CAT("35")
+#line 36 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data12.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(3))));}LINE_CAT("36")
+#line 37 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(3))]=_I_(new v_int(1000));}LINE_CAT("37")
+#line 38 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(3))]=_I_(new v_int(65536));}LINE_CAT("38")
+#line 39 "Initialization Part"
+try{_v_input[_I_(new v_int(3))]=_I_(new v_str("data12.in"));}LINE_CAT("39")
+#line 40 "Initialization Part"
+try{_v_output[_I_(new v_int(3))]=_I_(new v_str("data12.out"));}LINE_CAT("40")
+#line 41 "Initialization Part"
+try{_v_score[_I_(new v_int(3))]=_I_(new v_float(3.3333333333333));}LINE_CAT("41")
+#line 42 "Initialization Part"
+try{_v_userOut[_I_(new v_int(3))]=_I_(new v_str("data.out"));}LINE_CAT("42")
+#line 43 "Initialization Part"
+try{_v_userIn[_I_(new v_int(3))]=_I_(new v_str("data.in"));}LINE_CAT("43")
+#line 45 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data13.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(4))));}LINE_CAT("45")
+#line 46 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data13.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(4))));}LINE_CAT("46")
+#line 47 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(4))]=_I_(new v_int(1000));}LINE_CAT("47")
+#line 48 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(4))]=_I_(new v_int(65536));}LINE_CAT("48")
+#line 49 "Initialization Part"
+try{_v_input[_I_(new v_int(4))]=_I_(new v_str("data13.in"));}LINE_CAT("49")
+#line 50 "Initialization Part"
+try{_v_output[_I_(new v_int(4))]=_I_(new v_str("data13.out"));}LINE_CAT("50")
+#line 51 "Initialization Part"
+try{_v_score[_I_(new v_int(4))]=_I_(new v_float(3.3333333333333));}LINE_CAT("51")
+#line 52 "Initialization Part"
+try{_v_userOut[_I_(new v_int(4))]=_I_(new v_str("data.out"));}LINE_CAT("52")
+#line 53 "Initialization Part"
+try{_v_userIn[_I_(new v_int(4))]=_I_(new v_str("data.in"));}LINE_CAT("53")
+#line 55 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data14.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(5))));}LINE_CAT("55")
+#line 56 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data14.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(5))));}LINE_CAT("56")
+#line 57 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(5))]=_I_(new v_int(1000));}LINE_CAT("57")
+#line 58 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(5))]=_I_(new v_int(65536));}LINE_CAT("58")
+#line 59 "Initialization Part"
+try{_v_input[_I_(new v_int(5))]=_I_(new v_str("data14.in"));}LINE_CAT("59")
+#line 60 "Initialization Part"
+try{_v_output[_I_(new v_int(5))]=_I_(new v_str("data14.out"));}LINE_CAT("60")
+#line 61 "Initialization Part"
+try{_v_score[_I_(new v_int(5))]=_I_(new v_float(3.3333333333333));}LINE_CAT("61")
+#line 62 "Initialization Part"
+try{_v_userOut[_I_(new v_int(5))]=_I_(new v_str("data.out"));}LINE_CAT("62")
+#line 63 "Initialization Part"
+try{_v_userIn[_I_(new v_int(5))]=_I_(new v_str("data.in"));}LINE_CAT("63")
+#line 65 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data15.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(6))));}LINE_CAT("65")
+#line 66 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data15.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(6))));}LINE_CAT("66")
+#line 67 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(6))]=_I_(new v_int(1000));}LINE_CAT("67")
+#line 68 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(6))]=_I_(new v_int(65536));}LINE_CAT("68")
+#line 69 "Initialization Part"
+try{_v_input[_I_(new v_int(6))]=_I_(new v_str("data15.in"));}LINE_CAT("69")
+#line 70 "Initialization Part"
+try{_v_output[_I_(new v_int(6))]=_I_(new v_str("data15.out"));}LINE_CAT("70")
+#line 71 "Initialization Part"
+try{_v_score[_I_(new v_int(6))]=_I_(new v_float(3.3333333333333));}LINE_CAT("71")
+#line 72 "Initialization Part"
+try{_v_userOut[_I_(new v_int(6))]=_I_(new v_str("data.out"));}LINE_CAT("72")
+#line 73 "Initialization Part"
+try{_v_userIn[_I_(new v_int(6))]=_I_(new v_str("data.in"));}LINE_CAT("73")
+#line 75 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data16.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(7))));}LINE_CAT("75")
+#line 76 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data16.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(7))));}LINE_CAT("76")
+#line 77 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(7))]=_I_(new v_int(1000));}LINE_CAT("77")
+#line 78 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(7))]=_I_(new v_int(65536));}LINE_CAT("78")
+#line 79 "Initialization Part"
+try{_v_input[_I_(new v_int(7))]=_I_(new v_str("data16.in"));}LINE_CAT("79")
+#line 80 "Initialization Part"
+try{_v_output[_I_(new v_int(7))]=_I_(new v_str("data16.out"));}LINE_CAT("80")
+#line 81 "Initialization Part"
+try{_v_score[_I_(new v_int(7))]=_I_(new v_float(3.3333333333333));}LINE_CAT("81")
+#line 82 "Initialization Part"
+try{_v_userOut[_I_(new v_int(7))]=_I_(new v_str("data.out"));}LINE_CAT("82")
+#line 83 "Initialization Part"
+try{_v_userIn[_I_(new v_int(7))]=_I_(new v_str("data.in"));}LINE_CAT("83")
+#line 85 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data17.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(8))));}LINE_CAT("85")
+#line 86 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data17.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(8))));}LINE_CAT("86")
+#line 87 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(8))]=_I_(new v_int(1000));}LINE_CAT("87")
+#line 88 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(8))]=_I_(new v_int(65536));}LINE_CAT("88")
+#line 89 "Initialization Part"
+try{_v_input[_I_(new v_int(8))]=_I_(new v_str("data17.in"));}LINE_CAT("89")
+#line 90 "Initialization Part"
+try{_v_output[_I_(new v_int(8))]=_I_(new v_str("data17.out"));}LINE_CAT("90")
+#line 91 "Initialization Part"
+try{_v_score[_I_(new v_int(8))]=_I_(new v_float(3.3333333333333));}LINE_CAT("91")
+#line 92 "Initialization Part"
+try{_v_userOut[_I_(new v_int(8))]=_I_(new v_str("data.out"));}LINE_CAT("92")
+#line 93 "Initialization Part"
+try{_v_userIn[_I_(new v_int(8))]=_I_(new v_str("data.in"));}LINE_CAT("93")
+#line 95 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data18.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(9))));}LINE_CAT("95")
+#line 96 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data18.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(9))));}LINE_CAT("96")
+#line 97 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(9))]=_I_(new v_int(1000));}LINE_CAT("97")
+#line 98 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(9))]=_I_(new v_int(65536));}LINE_CAT("98")
+#line 99 "Initialization Part"
+try{_v_input[_I_(new v_int(9))]=_I_(new v_str("data18.in"));}LINE_CAT("99")
+#line 100 "Initialization Part"
+try{_v_output[_I_(new v_int(9))]=_I_(new v_str("data18.out"));}LINE_CAT("100")
+#line 101 "Initialization Part"
+try{_v_score[_I_(new v_int(9))]=_I_(new v_float(3.3333333333333));}LINE_CAT("101")
+#line 102 "Initialization Part"
+try{_v_userOut[_I_(new v_int(9))]=_I_(new v_str("data.out"));}LINE_CAT("102")
+#line 103 "Initialization Part"
+try{_v_userIn[_I_(new v_int(9))]=_I_(new v_str("data.in"));}LINE_CAT("103")
+#line 105 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data19.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(10))));}LINE_CAT("105")
+#line 106 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data19.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(10))));}LINE_CAT("106")
+#line 107 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(10))]=_I_(new v_int(1000));}LINE_CAT("107")
+#line 108 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(10))]=_I_(new v_int(65536));}LINE_CAT("108")
+#line 109 "Initialization Part"
+try{_v_input[_I_(new v_int(10))]=_I_(new v_str("data19.in"));}LINE_CAT("109")
+#line 110 "Initialization Part"
+try{_v_output[_I_(new v_int(10))]=_I_(new v_str("data19.out"));}LINE_CAT("110")
+#line 111 "Initialization Part"
+try{_v_score[_I_(new v_int(10))]=_I_(new v_float(3.3333333333333));}LINE_CAT("111")
+#line 112 "Initialization Part"
+try{_v_userOut[_I_(new v_int(10))]=_I_(new v_str("data.out"));}LINE_CAT("112")
+#line 113 "Initialization Part"
+try{_v_userIn[_I_(new v_int(10))]=_I_(new v_str("data.in"));}LINE_CAT("113")
+#line 115 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data2.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(11))));}LINE_CAT("115")
+#line 116 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data2.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(11))));}LINE_CAT("116")
+#line 117 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(11))]=_I_(new v_int(1000));}LINE_CAT("117")
+#line 118 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(11))]=_I_(new v_int(65536));}LINE_CAT("118")
+#line 119 "Initialization Part"
+try{_v_input[_I_(new v_int(11))]=_I_(new v_str("data2.in"));}LINE_CAT("119")
+#line 120 "Initialization Part"
+try{_v_output[_I_(new v_int(11))]=_I_(new v_str("data2.out"));}LINE_CAT("120")
+#line 121 "Initialization Part"
+try{_v_score[_I_(new v_int(11))]=_I_(new v_float(3.3333333333333));}LINE_CAT("121")
+#line 122 "Initialization Part"
+try{_v_userOut[_I_(new v_int(11))]=_I_(new v_str("data.out"));}LINE_CAT("122")
+#line 123 "Initialization Part"
+try{_v_userIn[_I_(new v_int(11))]=_I_(new v_str("data.in"));}LINE_CAT("123")
+#line 125 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data20.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(12))));}LINE_CAT("125")
+#line 126 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data20.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(12))));}LINE_CAT("126")
+#line 127 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(12))]=_I_(new v_int(1000));}LINE_CAT("127")
+#line 128 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(12))]=_I_(new v_int(65536));}LINE_CAT("128")
+#line 129 "Initialization Part"
+try{_v_input[_I_(new v_int(12))]=_I_(new v_str("data20.in"));}LINE_CAT("129")
+#line 130 "Initialization Part"
+try{_v_output[_I_(new v_int(12))]=_I_(new v_str("data20.out"));}LINE_CAT("130")
+#line 131 "Initialization Part"
+try{_v_score[_I_(new v_int(12))]=_I_(new v_float(3.3333333333333));}LINE_CAT("131")
+#line 132 "Initialization Part"
+try{_v_userOut[_I_(new v_int(12))]=_I_(new v_str("data.out"));}LINE_CAT("132")
+#line 133 "Initialization Part"
+try{_v_userIn[_I_(new v_int(12))]=_I_(new v_str("data.in"));}LINE_CAT("133")
+#line 135 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data21.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(13))));}LINE_CAT("135")
+#line 136 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data21.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(13))));}LINE_CAT("136")
+#line 137 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(13))]=_I_(new v_int(1000));}LINE_CAT("137")
+#line 138 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(13))]=_I_(new v_int(65536));}LINE_CAT("138")
+#line 139 "Initialization Part"
+try{_v_input[_I_(new v_int(13))]=_I_(new v_str("data21.in"));}LINE_CAT("139")
+#line 140 "Initialization Part"
+try{_v_output[_I_(new v_int(13))]=_I_(new v_str("data21.out"));}LINE_CAT("140")
+#line 141 "Initialization Part"
+try{_v_score[_I_(new v_int(13))]=_I_(new v_float(3.3333333333333));}LINE_CAT("141")
+#line 142 "Initialization Part"
+try{_v_userOut[_I_(new v_int(13))]=_I_(new v_str("data.out"));}LINE_CAT("142")
+#line 143 "Initialization Part"
+try{_v_userIn[_I_(new v_int(13))]=_I_(new v_str("data.in"));}LINE_CAT("143")
+#line 145 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data22.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(14))));}LINE_CAT("145")
+#line 146 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data22.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(14))));}LINE_CAT("146")
+#line 147 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(14))]=_I_(new v_int(1000));}LINE_CAT("147")
+#line 148 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(14))]=_I_(new v_int(65536));}LINE_CAT("148")
+#line 149 "Initialization Part"
+try{_v_input[_I_(new v_int(14))]=_I_(new v_str("data22.in"));}LINE_CAT("149")
+#line 150 "Initialization Part"
+try{_v_output[_I_(new v_int(14))]=_I_(new v_str("data22.out"));}LINE_CAT("150")
+#line 151 "Initialization Part"
+try{_v_score[_I_(new v_int(14))]=_I_(new v_float(3.3333333333333));}LINE_CAT("151")
+#line 152 "Initialization Part"
+try{_v_userOut[_I_(new v_int(14))]=_I_(new v_str("data.out"));}LINE_CAT("152")
+#line 153 "Initialization Part"
+try{_v_userIn[_I_(new v_int(14))]=_I_(new v_str("data.in"));}LINE_CAT("153")
+#line 155 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data23.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(15))));}LINE_CAT("155")
+#line 156 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data23.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(15))));}LINE_CAT("156")
+#line 157 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(15))]=_I_(new v_int(1000));}LINE_CAT("157")
+#line 158 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(15))]=_I_(new v_int(65536));}LINE_CAT("158")
+#line 159 "Initialization Part"
+try{_v_input[_I_(new v_int(15))]=_I_(new v_str("data23.in"));}LINE_CAT("159")
+#line 160 "Initialization Part"
+try{_v_output[_I_(new v_int(15))]=_I_(new v_str("data23.out"));}LINE_CAT("160")
+#line 161 "Initialization Part"
+try{_v_score[_I_(new v_int(15))]=_I_(new v_float(3.3333333333333));}LINE_CAT("161")
+#line 162 "Initialization Part"
+try{_v_userOut[_I_(new v_int(15))]=_I_(new v_str("data.out"));}LINE_CAT("162")
+#line 163 "Initialization Part"
+try{_v_userIn[_I_(new v_int(15))]=_I_(new v_str("data.in"));}LINE_CAT("163")
+#line 165 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data24.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(16))));}LINE_CAT("165")
+#line 166 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data24.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(16))));}LINE_CAT("166")
+#line 167 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(16))]=_I_(new v_int(1000));}LINE_CAT("167")
+#line 168 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(16))]=_I_(new v_int(65536));}LINE_CAT("168")
+#line 169 "Initialization Part"
+try{_v_input[_I_(new v_int(16))]=_I_(new v_str("data24.in"));}LINE_CAT("169")
+#line 170 "Initialization Part"
+try{_v_output[_I_(new v_int(16))]=_I_(new v_str("data24.out"));}LINE_CAT("170")
+#line 171 "Initialization Part"
+try{_v_score[_I_(new v_int(16))]=_I_(new v_float(3.3333333333333));}LINE_CAT("171")
+#line 172 "Initialization Part"
+try{_v_userOut[_I_(new v_int(16))]=_I_(new v_str("data.out"));}LINE_CAT("172")
+#line 173 "Initialization Part"
+try{_v_userIn[_I_(new v_int(16))]=_I_(new v_str("data.in"));}LINE_CAT("173")
+#line 175 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data25.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(17))));}LINE_CAT("175")
+#line 176 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data25.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(17))));}LINE_CAT("176")
+#line 177 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(17))]=_I_(new v_int(1000));}LINE_CAT("177")
+#line 178 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(17))]=_I_(new v_int(65536));}LINE_CAT("178")
+#line 179 "Initialization Part"
+try{_v_input[_I_(new v_int(17))]=_I_(new v_str("data25.in"));}LINE_CAT("179")
+#line 180 "Initialization Part"
+try{_v_output[_I_(new v_int(17))]=_I_(new v_str("data25.out"));}LINE_CAT("180")
+#line 181 "Initialization Part"
+try{_v_score[_I_(new v_int(17))]=_I_(new v_float(3.3333333333333));}LINE_CAT("181")
+#line 182 "Initialization Part"
+try{_v_userOut[_I_(new v_int(17))]=_I_(new v_str("data.out"));}LINE_CAT("182")
+#line 183 "Initialization Part"
+try{_v_userIn[_I_(new v_int(17))]=_I_(new v_str("data.in"));}LINE_CAT("183")
+#line 185 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data26.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(18))));}LINE_CAT("185")
+#line 186 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data26.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(18))));}LINE_CAT("186")
+#line 187 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(18))]=_I_(new v_int(1000));}LINE_CAT("187")
+#line 188 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(18))]=_I_(new v_int(65536));}LINE_CAT("188")
+#line 189 "Initialization Part"
+try{_v_input[_I_(new v_int(18))]=_I_(new v_str("data26.in"));}LINE_CAT("189")
+#line 190 "Initialization Part"
+try{_v_output[_I_(new v_int(18))]=_I_(new v_str("data26.out"));}LINE_CAT("190")
+#line 191 "Initialization Part"
+try{_v_score[_I_(new v_int(18))]=_I_(new v_float(3.3333333333333));}LINE_CAT("191")
+#line 192 "Initialization Part"
+try{_v_userOut[_I_(new v_int(18))]=_I_(new v_str("data.out"));}LINE_CAT("192")
+#line 193 "Initialization Part"
+try{_v_userIn[_I_(new v_int(18))]=_I_(new v_str("data.in"));}LINE_CAT("193")
+#line 195 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data27.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(19))));}LINE_CAT("195")
+#line 196 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data27.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(19))));}LINE_CAT("196")
+#line 197 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(19))]=_I_(new v_int(1000));}LINE_CAT("197")
+#line 198 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(19))]=_I_(new v_int(65536));}LINE_CAT("198")
+#line 199 "Initialization Part"
+try{_v_input[_I_(new v_int(19))]=_I_(new v_str("data27.in"));}LINE_CAT("199")
+#line 200 "Initialization Part"
+try{_v_output[_I_(new v_int(19))]=_I_(new v_str("data27.out"));}LINE_CAT("200")
+#line 201 "Initialization Part"
+try{_v_score[_I_(new v_int(19))]=_I_(new v_float(3.3333333333333));}LINE_CAT("201")
+#line 202 "Initialization Part"
+try{_v_userOut[_I_(new v_int(19))]=_I_(new v_str("data.out"));}LINE_CAT("202")
+#line 203 "Initialization Part"
+try{_v_userIn[_I_(new v_int(19))]=_I_(new v_str("data.in"));}LINE_CAT("203")
+#line 205 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data28.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(20))));}LINE_CAT("205")
+#line 206 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data28.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(20))));}LINE_CAT("206")
+#line 207 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(20))]=_I_(new v_int(1000));}LINE_CAT("207")
+#line 208 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(20))]=_I_(new v_int(65536));}LINE_CAT("208")
+#line 209 "Initialization Part"
+try{_v_input[_I_(new v_int(20))]=_I_(new v_str("data28.in"));}LINE_CAT("209")
+#line 210 "Initialization Part"
+try{_v_output[_I_(new v_int(20))]=_I_(new v_str("data28.out"));}LINE_CAT("210")
+#line 211 "Initialization Part"
+try{_v_score[_I_(new v_int(20))]=_I_(new v_float(3.3333333333333));}LINE_CAT("211")
+#line 212 "Initialization Part"
+try{_v_userOut[_I_(new v_int(20))]=_I_(new v_str("data.out"));}LINE_CAT("212")
+#line 213 "Initialization Part"
+try{_v_userIn[_I_(new v_int(20))]=_I_(new v_str("data.in"));}LINE_CAT("213")
+#line 215 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data29.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(21))));}LINE_CAT("215")
+#line 216 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data29.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(21))));}LINE_CAT("216")
+#line 217 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(21))]=_I_(new v_int(1000));}LINE_CAT("217")
+#line 218 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(21))]=_I_(new v_int(65536));}LINE_CAT("218")
+#line 219 "Initialization Part"
+try{_v_input[_I_(new v_int(21))]=_I_(new v_str("data29.in"));}LINE_CAT("219")
+#line 220 "Initialization Part"
+try{_v_output[_I_(new v_int(21))]=_I_(new v_str("data29.out"));}LINE_CAT("220")
+#line 221 "Initialization Part"
+try{_v_score[_I_(new v_int(21))]=_I_(new v_float(3.3333333333333));}LINE_CAT("221")
+#line 222 "Initialization Part"
+try{_v_userOut[_I_(new v_int(21))]=_I_(new v_str("data.out"));}LINE_CAT("222")
+#line 223 "Initialization Part"
+try{_v_userIn[_I_(new v_int(21))]=_I_(new v_str("data.in"));}LINE_CAT("223")
+#line 225 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data3.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(22))));}LINE_CAT("225")
+#line 226 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data3.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(22))));}LINE_CAT("226")
+#line 227 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(22))]=_I_(new v_int(1000));}LINE_CAT("227")
+#line 228 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(22))]=_I_(new v_int(65536));}LINE_CAT("228")
+#line 229 "Initialization Part"
+try{_v_input[_I_(new v_int(22))]=_I_(new v_str("data3.in"));}LINE_CAT("229")
+#line 230 "Initialization Part"
+try{_v_output[_I_(new v_int(22))]=_I_(new v_str("data3.out"));}LINE_CAT("230")
+#line 231 "Initialization Part"
+try{_v_score[_I_(new v_int(22))]=_I_(new v_float(3.3333333333333));}LINE_CAT("231")
+#line 232 "Initialization Part"
+try{_v_userOut[_I_(new v_int(22))]=_I_(new v_str("data.out"));}LINE_CAT("232")
+#line 233 "Initialization Part"
+try{_v_userIn[_I_(new v_int(22))]=_I_(new v_str("data.in"));}LINE_CAT("233")
+#line 235 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data30.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(23))));}LINE_CAT("235")
+#line 236 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data30.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(23))));}LINE_CAT("236")
+#line 237 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(23))]=_I_(new v_int(1000));}LINE_CAT("237")
+#line 238 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(23))]=_I_(new v_int(65536));}LINE_CAT("238")
+#line 239 "Initialization Part"
+try{_v_input[_I_(new v_int(23))]=_I_(new v_str("data30.in"));}LINE_CAT("239")
+#line 240 "Initialization Part"
+try{_v_output[_I_(new v_int(23))]=_I_(new v_str("data30.out"));}LINE_CAT("240")
+#line 241 "Initialization Part"
+try{_v_score[_I_(new v_int(23))]=_I_(new v_float(3.3333333333333));}LINE_CAT("241")
+#line 242 "Initialization Part"
+try{_v_userOut[_I_(new v_int(23))]=_I_(new v_str("data.out"));}LINE_CAT("242")
+#line 243 "Initialization Part"
+try{_v_userIn[_I_(new v_int(23))]=_I_(new v_str("data.in"));}LINE_CAT("243")
+#line 245 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data4.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(24))));}LINE_CAT("245")
+#line 246 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data4.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(24))));}LINE_CAT("246")
+#line 247 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(24))]=_I_(new v_int(1000));}LINE_CAT("247")
+#line 248 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(24))]=_I_(new v_int(65536));}LINE_CAT("248")
+#line 249 "Initialization Part"
+try{_v_input[_I_(new v_int(24))]=_I_(new v_str("data4.in"));}LINE_CAT("249")
+#line 250 "Initialization Part"
+try{_v_output[_I_(new v_int(24))]=_I_(new v_str("data4.out"));}LINE_CAT("250")
+#line 251 "Initialization Part"
+try{_v_score[_I_(new v_int(24))]=_I_(new v_float(3.3333333333333));}LINE_CAT("251")
+#line 252 "Initialization Part"
+try{_v_userOut[_I_(new v_int(24))]=_I_(new v_str("data.out"));}LINE_CAT("252")
+#line 253 "Initialization Part"
+try{_v_userIn[_I_(new v_int(24))]=_I_(new v_str("data.in"));}LINE_CAT("253")
+#line 255 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data5.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(25))));}LINE_CAT("255")
+#line 256 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data5.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(25))));}LINE_CAT("256")
+#line 257 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(25))]=_I_(new v_int(1000));}LINE_CAT("257")
+#line 258 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(25))]=_I_(new v_int(65536));}LINE_CAT("258")
+#line 259 "Initialization Part"
+try{_v_input[_I_(new v_int(25))]=_I_(new v_str("data5.in"));}LINE_CAT("259")
+#line 260 "Initialization Part"
+try{_v_output[_I_(new v_int(25))]=_I_(new v_str("data5.out"));}LINE_CAT("260")
+#line 261 "Initialization Part"
+try{_v_score[_I_(new v_int(25))]=_I_(new v_float(3.3333333333333));}LINE_CAT("261")
+#line 262 "Initialization Part"
+try{_v_userOut[_I_(new v_int(25))]=_I_(new v_str("data.out"));}LINE_CAT("262")
+#line 263 "Initialization Part"
+try{_v_userIn[_I_(new v_int(25))]=_I_(new v_str("data.in"));}LINE_CAT("263")
+#line 265 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data6.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(26))));}LINE_CAT("265")
+#line 266 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data6.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(26))));}LINE_CAT("266")
+#line 267 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(26))]=_I_(new v_int(1000));}LINE_CAT("267")
+#line 268 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(26))]=_I_(new v_int(65536));}LINE_CAT("268")
+#line 269 "Initialization Part"
+try{_v_input[_I_(new v_int(26))]=_I_(new v_str("data6.in"));}LINE_CAT("269")
+#line 270 "Initialization Part"
+try{_v_output[_I_(new v_int(26))]=_I_(new v_str("data6.out"));}LINE_CAT("270")
+#line 271 "Initialization Part"
+try{_v_score[_I_(new v_int(26))]=_I_(new v_float(3.3333333333333));}LINE_CAT("271")
+#line 272 "Initialization Part"
+try{_v_userOut[_I_(new v_int(26))]=_I_(new v_str("data.out"));}LINE_CAT("272")
+#line 273 "Initialization Part"
+try{_v_userIn[_I_(new v_int(26))]=_I_(new v_str("data.in"));}LINE_CAT("273")
+#line 275 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data7.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(27))));}LINE_CAT("275")
+#line 276 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data7.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(27))));}LINE_CAT("276")
+#line 277 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(27))]=_I_(new v_int(1000));}LINE_CAT("277")
+#line 278 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(27))]=_I_(new v_int(65536));}LINE_CAT("278")
+#line 279 "Initialization Part"
+try{_v_input[_I_(new v_int(27))]=_I_(new v_str("data7.in"));}LINE_CAT("279")
+#line 280 "Initialization Part"
+try{_v_output[_I_(new v_int(27))]=_I_(new v_str("data7.out"));}LINE_CAT("280")
+#line 281 "Initialization Part"
+try{_v_score[_I_(new v_int(27))]=_I_(new v_float(3.3333333333333));}LINE_CAT("281")
+#line 282 "Initialization Part"
+try{_v_userOut[_I_(new v_int(27))]=_I_(new v_str("data.out"));}LINE_CAT("282")
+#line 283 "Initialization Part"
+try{_v_userIn[_I_(new v_int(27))]=_I_(new v_str("data.in"));}LINE_CAT("283")
+#line 285 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data8.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(28))));}LINE_CAT("285")
+#line 286 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data8.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(28))));}LINE_CAT("286")
+#line 287 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(28))]=_I_(new v_int(1000));}LINE_CAT("287")
+#line 288 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(28))]=_I_(new v_int(65536));}LINE_CAT("288")
+#line 289 "Initialization Part"
+try{_v_input[_I_(new v_int(28))]=_I_(new v_str("data8.in"));}LINE_CAT("289")
+#line 290 "Initialization Part"
+try{_v_output[_I_(new v_int(28))]=_I_(new v_str("data8.out"));}LINE_CAT("290")
+#line 291 "Initialization Part"
+try{_v_score[_I_(new v_int(28))]=_I_(new v_float(3.3333333333333));}LINE_CAT("291")
+#line 292 "Initialization Part"
+try{_v_userOut[_I_(new v_int(28))]=_I_(new v_str("data.out"));}LINE_CAT("292")
+#line 293 "Initialization Part"
+try{_v_userIn[_I_(new v_int(28))]=_I_(new v_str("data.in"));}LINE_CAT("293")
+#line 295 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data9.in"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(29))));}LINE_CAT("295")
+#line 296 "Initialization Part"
+try{_v_filemode[_I_(new v_int(3))][_I_(new v_str("data9.out"))]=_I_(new v_dict()).add(std::pair<std::string,iter>((_I_(new v_str("case")))->as_str(),_I_(new v_int(29))));}LINE_CAT("296")
+#line 297 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("time"))][_I_(new v_int(29))]=_I_(new v_int(1000));}LINE_CAT("297")
+#line 298 "Initialization Part"
+try{_v_filemode[_I_(new v_int(4))][_I_(new v_str("EXE"))][_I_(new v_str("memory"))][_I_(new v_int(29))]=_I_(new v_int(65536));}LINE_CAT("298")
+#line 299 "Initialization Part"
+try{_v_input[_I_(new v_int(29))]=_I_(new v_str("data9.in"));}LINE_CAT("299")
+#line 300 "Initialization Part"
+try{_v_output[_I_(new v_int(29))]=_I_(new v_str("data9.out"));}LINE_CAT("300")
+#line 301 "Initialization Part"
+try{_v_score[_I_(new v_int(29))]=_I_(new v_float(3.3333333333333));}LINE_CAT("301")
+#line 302 "Initialization Part"
+try{_v_userOut[_I_(new v_int(29))]=_I_(new v_str("data.out"));}LINE_CAT("302")
+#line 303 "Initialization Part"
+try{_v_userIn[_I_(new v_int(29))]=_I_(new v_str("data.in"));}LINE_CAT("303")
