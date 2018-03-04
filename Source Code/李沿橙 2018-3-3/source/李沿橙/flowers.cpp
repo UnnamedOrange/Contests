@@ -88,71 +88,113 @@ struct Graph
 #define DEF(G) const Graph::Edge& e = G.edges[idx_##G]; int to = e.to
 } G;
 
-#define RunInstance(x) delete new x
-struct brute
+struct FNTT
 {
-	static const int maxN = 505;
-	int size[maxN];
-	int f[2][maxN][maxN];
-	
-	void DFS(int node, int parent)
+	static int power(int x, int y)
 	{
-		size[node] = 1;
-		f[0][node][0] = 1;
-		f[1][node][1] = a[node];
-		if(G.size[node] - (bool)parent == 0)
+		int ret = 1;
+		while (y)
 		{
-			return;
+			if (y & 1) ret = (long long)ret * x % mod;
+			x = (long long)x * x % mod;
+			y >>= 1;
 		}
-		wander(G, node)
+		return ret;
+	}
+	const int g = 3;
+	const int limit = 23;
+	const int base = 119;
+	int n, logn;
+	inline int revbit(int x)
+	{
+		int ret = 0;
+		for (int i = 0; i < logn; i++, x >>= 1)
+			ret = (ret << 1) | (bool)(x & 1);
+		return ret;
+	}
+	FNTT(int* a, int logn, int sig) : n(1 << logn), logn(logn)
+	{
+		for (int i = 0; i < n; i++)
 		{
-			DEF(G);
-			if(e.to != parent)
-				DFS(e.to, node);
-			size[node] += size[e.to];
-			
-			for(int i = size; i >= 1; i--)
+			int t = revbit(i);
+			if (i < t) std::swap(a[i], a[t]);
+		}
+		for (int i = 1; i <= logn; i++)
+		{
+			int S = 1 << i;
+			int half = S >> 1;
+			int g1 = power(g, base * (1 << (23 - i)));
+			if (!~sig) g1 = power(g1, mod - 2);
+			for (int j = 0; j < n; j += S)
 			{
-				for(int j = 0; j <= i; j++)
+				int g = 1;
+				int* A = a + j;
+				for (int k = 0; k < half; k++)
 				{
-					f[0][node][i] = (f[0][node][i] + ((long long)f[0][node][i - j] * (f[0][e.to][j] + f[1][e.to][j]))) % mod;
-					f[1][node][i] = (f[1][node][i] + ((long long)f[0][node][i - j])) % mod;
+					int t = (long long)A[k + half] * g % mod;
+					A[k + half] = (A[k] - t) % mod;
+					A[k] = (A[k] + t) % mod;
+					g = (long long)g * g1 % mod;
 				}
 			}
-			
 		}
+		for (int i = 0; i < n; i++)
+			if (a[i] < 0) a[i] += mod;
 	}
-	
-	brute()
+};
+struct NTT : private FNTT
+{
+	NTT(int* a, int logn) : FNTT(a, logn, 1) {}
+};
+struct INTT : private FNTT
+{
+	INTT(int* a, int logn) : FNTT(a, logn, -1)
 	{
-		memset(f, 0, sizeof(f));
-		DFS(1, 0);
+		int n = 1 << logn;
+		int inv = FNTT::power(n, mod - 2);
+		for (int i = 0; i < n; i++)
+			a[i] = (long long)a[i] * inv % mod;
 	}
+};
+
+
+#define RunInstance(x) delete new x
+struct subtask4
+{
+	struct Area
+	{
+		int l;
+		int r;
+		std::vector<int> poly;
+	};
+	std::vector<Area> topo;
+
+	void BFS(int l, int r)
+	{
+
+	}
+
 };
 
 void run()
 {
 	n = readIn();
 	m = readIn();
-	for(int i = 1; i <= n; i++)
+	for (int i = 1; i <= n; i++)
 		a[i] = readIn();
-	
-	for(int i = 1; i < n; i++)
+
+	for (int i = 1; i < n; i++)
 	{
 		int from = readIn();
 		int to = readIn();
 		G.addEdge(from, to);
 		G.addEdge(to, from);
-		if(!(from == i && to == i + 1)) p1 = false;
-		if(!(from == 1 && to == i + 1)) p2 = false;
+		if (!(from == i && to == i + 1)) p1 = false;
+		if (!(from == 1 && to == i + 1)) p2 = false;
 	}
-	
-	if(n <= 500)
-		RunInstance(brute);
-	else if(p1)
-		RunInstance(cheat1);
-	else if(p2)
-		RunInstance(cheat2);
+
+	if (p1)
+		RunInstance(subtask4);
 }
 
 int main()
