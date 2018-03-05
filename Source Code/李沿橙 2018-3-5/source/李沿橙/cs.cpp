@@ -124,25 +124,40 @@ struct cheat
 struct work
 {
 	int idx[maxn];
+	int ans[maxn];
 
 	static bool comp(const int& x, const int& y)
 	{
-		return a[x] > a[y];
+		return a[x] < a[y];
 	}
 
-	bool check(int s)
+	int calc1(int s)
 	{
 		int score = 0;
-		for(int i = 1; i <= s; i++)
-		{
-			if (score * n < a[idx[i]] * (i - 1))
+		int t = 0;
+		for (int i = n; i > s; i--)
+			if ((LL)score * n < (LL)(t++) * a[idx[i]])
 				score++;
-		}
-		for(int i = n; i > s; i--)
-		{
-			if (score * n < a[idx[i]] * (i - 1))
+		for (int i = 1; i <= s; i++)
+			if ((LL)score * n < (LL)(t++) * a[idx[i]])
 				score++;
-		}
+		return score;
+	}
+	int calc2(int s, int right)
+	{
+		int score = 0;
+		int t = 0;
+		for (int i = n; i > right; i--)
+			if ((LL)score * n < (LL)(t++) * a[idx[i]])
+				score++;
+		for (int i = 1; i < s; i++)
+			if ((LL)score * n < (LL)(t++) * a[idx[i]])
+				score++;
+		if ((LL)score * n < (LL)(t++) * a[idx[right]])
+			score++;
+		for (int i = s; i < right; i++)
+			if ((LL)score * n < (LL)(t++) * a[idx[i]])
+				score++;
 		return score;
 	}
 
@@ -152,27 +167,41 @@ struct work
 			idx[i] = i;
 		std::sort(idx + 1, idx + 1 + n, comp);
 
-		int l = 0, r = n;
-		while(r - l > 0)
+		int l = 0, r = n + 1;
+		while (r - l > 1)
 		{
 			int mid = (l + r) >> 1;
-			if(check(mid) >= p)
-				l = mid + 1;
+			if (calc1(mid) <= p)
+				l = mid;
 			else
 				r = mid;
 		}
 
-		if(std::abs(check(l + 1) - p) < std::abs(check(l) - p))
-			l++;
+		int right = l;
 
-		for(int i = 1; i <= l; i++)
+		l = 1;
+		r = right + 1;
+		while (r - l > 1)
 		{
-			printOut(idx[i]);
-			putchar(' ');
+			int mid = (l + r) >> 1;
+			if (calc2(mid, right) <= p)
+				l = mid;
+			else
+				r = mid;
 		}
-		for(int i = n; i > l; i--)
+
+		int t = 0;
+		for (int i = n; i > right; i--)
+			ans[++t] = idx[i];
+		for (int i = 1; i < l; i++)
+			ans[++t] = idx[i];
+		if (right) ans[++t] = idx[right];
+		for (int i = l; i < right; i++)
+			ans[++t] = idx[i];
+
+		for (int i = 1; i <= n; i++)
 		{
-			printOut(idx[i]);
+			printOut(ans[i]);
 			putchar(' ');
 		}
 	}

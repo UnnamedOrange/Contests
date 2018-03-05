@@ -46,7 +46,7 @@ void printOut(INT_PUT x)
 {
 	char buffer[20];
 	int length = 0;
-	if(x < 0)
+	if (x < 0)
 	{
 		putchar('-');
 		x = -x;
@@ -55,11 +55,11 @@ void printOut(INT_PUT x)
 	{
 		buffer[length++] = x % 10 + '0';
 		x /= 10;
-	} while(x);
+	} while (x);
 	do
 	{
 		putchar(buffer[--length]);
-	} while(length);
+	} while (length);
 }
 
 const int mod = 998244353;
@@ -73,14 +73,14 @@ struct brute
 	int ans;
 	void DFS(int node, int count, int accu, int pre)
 	{
-		if(count == m)
+		if (count == m)
 		{
 			ans = (ans + accu) % mod;
 			return;
 		}
-		for(int i = 1; i <= n; i++)
+		for (int i = 1; i <= n; i++)
 		{
-			if(rect[node][i])
+			if (rect[node][i])
 			{
 				int t = rect[node][i];
 				rect[node][i] = 0;
@@ -89,10 +89,10 @@ struct brute
 			}
 		}
 	}
-	
+
 	brute() : ans()
 	{
-		for(int i = 1; i <= n; i++)
+		for (int i = 1; i <= n; i++)
 			DFS(i, 0, 0, 0);
 		printOut(ans / (m - 1));
 	}
@@ -102,15 +102,15 @@ void run()
 {
 	n = readIn();
 	m = readIn();
-	for(int i = 1; i <= m; i++)
+	for (int i = 1; i <= m; i++)
 	{
 		int color = readIn();
 		int from = readIn();
 		int to = readIn();
 		rect[from][to] = color;
 	}
-	
-	if(n <= 10 && m <= 16)
+
+	if (n <= 10 && m <= 16)
 		RunInstance(brute);
 }
 
