@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cctype>
+#include <climits>
+#include <cassert>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -13,17 +16,19 @@
 #include <set>
 #include <bitset>
 #include <list>
-#include <cassert>
-#include <cctype>
-#include <climits>
+#include <functional>
 typedef long long LL;
+typedef unsigned long long ULL;
+using std::cin;
+using std::cout;
+using std::endl;
 typedef int INT_PUT;
 INT_PUT readIn()
 {
 	INT_PUT a = 0;
 	bool minus = false;
 	char ch = getchar();
-	if (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
 	if (ch == '-')
 	{
 		minus = true;
@@ -58,10 +63,8 @@ void printOut(INT_PUT x)
 }
 
 const int mod = 998244353;
-const int maxn = int(8e4) + 5;
-int n, m;
-int a[maxn];
-int p1 = true, p2 = true;
+const int maxn = 80005;
+const int maxs = 262144 + 6;
 struct Graph
 {
 	struct Edge
@@ -72,108 +75,212 @@ struct Graph
 	int head[maxn];
 	int size[maxn];
 	int i;
-	Graph() : i(), size()
+	Graph() : size(), i()
 	{
 		memset(head, -1, sizeof(head));
 	}
+
 	void addEdge(int from, int to)
 	{
-		size[from]++;
 		edges[i].to = to;
-		edges[i].next = from;
+		edges[i].next = head[from];
 		head[from] = i;
 		i++;
 	}
-#define wander(G, node) for (int idx_##G = G.head[node]; ~idx_##G; idx_##G = G.edges[idx_##G].next)
+#define wander(G, node) for (int idx_##G = G.head[node]; ~idx_##G; ~idx_##G = G.edges[idx_##G].next)
 #define DEF(G) const Graph::Edge& e = G.edges[idx_##G]; int to = e.to
 } G;
 
-struct FNTT
+int power(int x, int y)
 {
-	static int power(int x, int y)
+	int ret = 1;
+	while (y)
 	{
-		int ret = 1;
-		while (y)
-		{
-			if (y & 1) ret = (long long)ret * x % mod;
-			x = (long long)x * x % mod;
-			y >>= 1;
-		}
-		return ret;
+		if (y & 1) ret = (long long)ret * x % mod;
+		x = (long long)x * x % mod;
+		y >>= 1;
 	}
-	const int g = 3;
-	const int limit = 23;
+	return ret;
+}
+void NTT(int* a, int logn, bool inv = false)
+{
+	static int rev[maxs];
+	int n = 1 << logn;
+	for (int i = 1; i < n; i++)
+		rev[i] = ((i & 1) << (logn - 1)) | (rev[i >> 1] >> 1); // 使用线性递推，用空间换时间
+	for (int i = 1; i < n; i++)
+		if (i < rev[i])
+			std::swap(a[i], a[rev[i]]);
+	const int root = 3;
 	const int base = 119;
-	int n, logn;
-	inline int revbit(int x)
+	const int limit = 23;
+
+	for (int i = 1; i <= logn; i++)
 	{
-		int ret = 0;
-		for (int i = 0; i < logn; i++, x >>= 1)
-			ret = (ret << 1) | (bool)(x & 1);
-		return ret;
-	}
-	FNTT(int* a, int logn, int sig) : n(1 << logn), logn(logn)
-	{
-		for (int i = 0; i < n; i++)
+		int S = 1 << i;
+		int half = S >> 1;
+		int g1 = power(root, base * (1 << (limit - i)));
+		if (inv) g1 = power(g1, mod - 2);
+		for (int j = 0; j < n; j += S)
 		{
-			int t = revbit(i);
-			if (i < t) std::swap(a[i], a[t]);
-		}
-		for (int i = 1; i <= logn; i++)
-		{
-			int S = 1 << i;
-			int half = S >> 1;
-			int g1 = power(g, base * (1 << (23 - i)));
-			if (!~sig) g1 = power(g1, mod - 2);
-			for (int j = 0; j < n; j += S)
+			int* A = a + j;
+			int g = 1;
+			for (int k = 0; k < half; k++)
 			{
-				int g = 1;
-				int* A = a + j;
-				for (int k = 0; k < half; k++)
-				{
-					int t = (long long)A[k + half] * g % mod;
-					A[k + half] = (A[k] - t) % mod;
-					A[k] = (A[k] + t) % mod;
-					g = (long long)g * g1 % mod;
-				}
+				int x = A[k];
+				int y = (long long)A[k + half] * g % mod;
+				A[k] = x + y < mod ? x + y : x + y - mod;
+				A[k + half] = x - y < 0 ? x - y + mod : x - y;
+				g = (long long)g * g1 % mod;
 			}
 		}
-		for (int i = 0; i < n; i++)
-			if (a[i] < 0) a[i] += mod;
 	}
-};
-struct NTT : private FNTT
-{
-	NTT(int* a, int logn) : FNTT(a, logn, 1) {}
-};
-struct INTT : private FNTT
-{
-	INTT(int* a, int logn) : FNTT(a, logn, -1)
+	if (inv)
 	{
-		int n = 1 << logn;
-		int inv = FNTT::power(n, mod - 2);
+		int t = power(n, mod - 2);
 		for (int i = 0; i < n; i++)
-			a[i] = (long long)a[i] * inv % mod;
+			a[i] = (long long)a[i] * t % mod;
+	}
+}
+struct Poly : std::vector<int>
+{
+	inline int times() const
+	{
+		return std::vector<int>::size();
+	}
+	Poly() : std::vector<int>(1, 0) {}
+	Poly(const std::vector<int>& src) : std::vector<int>(src)
+	{
+		if (!std::vector<int>::size())
+			std::vector<int>::push_back(0);
+	}
+
+	friend Poly operator* (const Poly&x, const Poly& y)
+	{
+		static int a[maxs], b[maxs];
+		const int *srcA = x.data(), *srcB = y.data();
+		int bound = x.times() + y.times() - 1;
+		int logn = 0;
+		while ((1 << logn) < bound)
+			logn++;
+		int n = 1 << logn;
+		std::copy(srcA, srcA + x.times(), a);
+		std::copy(srcB, srcB + y.times(), b);
+		std::fill(a + x.times(), a + n, 0);
+		std::fill(b + y.times(), b + n, 0);
+		NTT(a, logn); NTT(b, logn);
+		for (int i = 0; i < n; i++)
+			a[i] = (long long)a[i] * b[i] % mod;
+		NTT(a, logn, true);
+		return std::vector<int>(a, a + bound);
+	}
+	friend Poly operator+ (const Poly& x, const Poly& y)
+	{
+		static int a[maxs];
+		const int *srcA = x.data(), *srcB = y.data();
+		int bound = std::max(x.times(), y.times());
+		std::fill(a, a + bound, 0);
+		std::copy(srcA, srcA + x.times(), a);
+		for (int i = 0; i < y.times(); i++)
+			a[i] = a[i] + srcB[i] < mod ? a[i] + srcB[i] : a[i] + srcB[i] - mod;
+		return std::vector<int>(a, a + bound);
+	}
+	friend Poly operator- (const Poly& x, const Poly& y)
+	{
+		static int a[maxs];
+		const int *srcA = x.data(), *srcB = y.data();
+		int bound = std::max(x.times(), y.times());
+		std::fill(a, a + bound, 0);
+		std::copy(srcA, srcA + x.times(), a);
+		for (int i = 0; i < y.times(); i++)
+			a[i] = a[i] - srcB[i] < 0 ? a[i] - srcB[i] + mod : a[i] - srcB[i];
+		return std::vector<int>(a, a + bound);
 	}
 };
 
+int n, m;
+int p1 = true, p2 = true;
+int a[maxs];
 
 #define RunInstance(x) delete new x
 struct subtask4
 {
-	struct Area
+	Poly f[4][maxn * 2];
+	static inline int code(int l, int r)
 	{
-		int l;
-		int r;
-		std::vector<int> poly;
-	};
-	std::vector<Area> topo;
-
-	void BFS(int l, int r)
+		return (l + r) | (l != r);
+	}
+	void divide(int l, int r)
 	{
-
+		int cnt = code(l, r);
+		Poly& f0 = f[0][cnt];
+		Poly& f1 = f[1][cnt];
+		Poly& f2 = f[2][cnt];
+		Poly& f3 = f[3][cnt];
+		if (l == r)
+		{
+			f0.resize(1);
+			f0[0] = 1;
+			f3.resize(2);
+			f3[0] = 0;
+			f3[1] = a[l];
+			return;
+		}
+		int mid = (l + r) >> 1;
+		divide(l, mid);
+		divide(mid + 1, r);
+		int lc = code(l, mid);
+		int rc = code(mid + 1, r);
+		f0 = (f[0][lc] + f[2][lc]) * f[0][rc] + f[0][lc] * f[1][rc];
+		f1 = f[1][lc] * (f[0][rc] + f[1][rc]) + f[3][lc] * f[0][rc];
+		f2 = (f[0][lc] + f[2][lc]) * f[2][rc] + f[0][lc] * f[3][rc];
+		f3 = f[1][lc] * (f[2][rc] + f[3][rc]) + f[3][lc] * f[2][rc];
 	}
 
+	subtask4()
+	{
+		divide(1, n);
+		int t = code(1, n);
+		f[0][t].resize(m + 1);
+		f[1][t].resize(m + 1);
+		f[2][t].resize(m + 1);
+		f[3][t].resize(m + 1);
+		printOut(((long long)f[0][t][m] + f[1][t][m] + f[2][t][m] + f[3][t][m]) % mod);
+	}
+};
+struct subtask5
+{
+	Poly f[maxn * 2];
+	static inline int code(int l, int r)
+	{
+		return (l + r) | (l != r);
+	}
+
+	void divide(int l, int r)
+	{
+		Poly& f0 = f[code(l, r)];
+		if (l == r)
+		{
+			f0.resize(2);
+			f0[0] = 1;
+			f0[1] = a[l];
+			return;
+		}
+		int mid = (l + r) >> 1;
+		int lc = code(l, mid);
+		int rc = code(mid + 1, r);
+		divide(l, mid);
+		divide(mid + 1, r);
+		const Poly& f1 = f[lc];
+		const Poly& f2 = f[rc];
+		f0 = f1 * f2;
+	}
+
+	subtask5()
+	{
+		divide(2, n);
+		printOut((f[code(2, n)][m] + (m == 1 ? a[1] : 0)) % mod);
+	}
 };
 
 void run()
@@ -182,7 +289,6 @@ void run()
 	m = readIn();
 	for (int i = 1; i <= n; i++)
 		a[i] = readIn();
-
 	for (int i = 1; i < n; i++)
 	{
 		int from = readIn();
@@ -195,6 +301,8 @@ void run()
 
 	if (p1)
 		RunInstance(subtask4);
+	else if (p2)
+		RunInstance(subtask5);
 }
 
 int main()
