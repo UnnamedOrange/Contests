@@ -87,7 +87,7 @@ struct Graph
 		head[from] = i;
 		i++;
 	}
-#define wander(G, node) for (int idx_##G = G.head[node]; ~idx_##G; ~idx_##G = G.edges[idx_##G].next)
+#define wander(G, node) for (int idx_##G = G.head[node]; ~idx_##G; idx_##G = G.edges[idx_##G].next)
 #define DEF(G) const Graph::Edge& e = G.edges[idx_##G]; int to = e.to
 } G;
 
@@ -203,6 +203,63 @@ int p1 = true, p2 = true;
 int a[maxs];
 
 #define RunInstance(x) delete new x
+struct subtask2
+{
+	static const int maxN = 4005;
+	Poly f[maxN];
+	Poly g[maxN];
+
+	void DFS(int node, int parent)
+	{
+		f[node].push_back(a[node]);
+		g[node][0] = 1;
+		wander(G, node)
+		{
+			DEF(G);
+			if (to == parent) continue;
+			DFS(to, node);
+			f[node] = f[node] * g[to];
+			g[node] = g[node] * (f[to] + g[to]);
+		}
+	}
+
+	subtask2()
+	{
+		DFS(1, 0);
+		f[1].resize(m + 1);
+		g[1].resize(m + 1);
+		printOut((f[1][m] + g[1][m]) % mod);
+	}
+};
+struct subtask3
+{
+	Poly f[maxn];
+	Poly g[maxn];
+
+	void DFS(int node, int parent)
+	{
+		f[node].push_back(a[node]);
+		g[node][0] = 1;
+		wander(G, node)
+		{
+			DEF(G);
+			if (to == parent) continue;
+			DFS(to, node);
+			f[node] = f[node] * g[to];
+			g[node] = g[node] * (f[to] + g[to]);
+			if (f[node].size() > 11) f[node].resize(11);
+			if (g[node].size() > 11) g[node].resize(11);
+		}
+	}
+
+	subtask3()
+	{
+		DFS(1, 0);
+		f[1].resize(m + 1);
+		g[1].resize(m + 1);
+		printOut((f[1][m] + g[1][m]) % mod);
+	}
+};
 struct subtask4
 {
 	Poly f[4][maxn * 2];
@@ -279,6 +336,7 @@ struct subtask5
 	subtask5()
 	{
 		divide(2, n);
+		f[code(2, n)].resize(m + 1);
 		printOut((f[code(2, n)][m] + (m == 1 ? a[1] : 0)) % mod);
 	}
 };
@@ -303,6 +361,10 @@ void run()
 		RunInstance(subtask4);
 	else if (p2)
 		RunInstance(subtask5);
+	else if (n <= 4000)
+		RunInstance(subtask2);
+	else if (m <= 10)
+		RunInstance(subtask3);
 }
 
 int main()
