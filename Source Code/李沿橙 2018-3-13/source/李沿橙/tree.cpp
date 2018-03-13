@@ -87,13 +87,6 @@ struct Graph
 } G;
 
 #define RunInstance(x) delete new x
-struct brute
-{
-	brute()
-	{
-
-	}
-};
 struct work
 {
 	bool vis[maxn];
@@ -129,12 +122,14 @@ struct work
 		LL depth;
 		Node() {}
 		Node(int idx, int belong, LL depth) : idx(idx), belong(belong), depth(depth) {}
-		bool operator> (const Node& b) const
+		bool operator< (const Node& b) const
 		{
+			if (belong != b.belong) return belong < b.belong;
 			return depth > b.depth;
 		}
 	};
 	std::vector<Node> vset[maxn];
+	std::vector<int> begin[maxn];
 	void DFS2(int node, int parent, int belong, int center)
 	{
 		vset[center].push_back(Node(node, belong, depth[node]));
@@ -147,6 +142,7 @@ struct work
 		}
 	}
 
+	int deal[maxn];
 	void solve(int node)
 	{
 		DFS1(node, 0);
@@ -156,7 +152,16 @@ struct work
 
 		depth[node] = 0;
 		DFS2(node, 0, 0, node);
-		std::sort(vset[node].begin(), vset[node].end(), std::greater<Node>());
+		std::sort(vset[node].begin(), vset[node].end());
+		std::vector<int>& b = begin[node];
+		std::vector<Node>& t = vset[node];
+		int pre = 0;
+		for (int i = 1; i < t.size(); i++)
+			if (t[i].belong != pre)
+			{
+				b.push_back(i);
+				pre = t[i].belong;
+			}
 
 		wander(G, node)
 		{
@@ -164,46 +169,85 @@ struct work
 			if (vis[to]) continue;
 			solve(to);
 		}
+		deal[++deal[0]] = node;
 	}
 
-	struct HeapNode
+	LL ans[maxn];
+	LL check(LL s, LL c, bool add)
 	{
-		int center;
-		int a;
-		int b;
-		LL length;
-		bool expand;
-		HeapNode() {}
-		HeapNode(int center, int a, int b, LL length, bool expand) : center(center), a(a), b(b), length(length), expand(expand) {}
-		bool operator<(const HeapNode& b) const
+		LL accum = 0;
+		for (int i = 1; i <= n; i++)
 		{
-			return length < b.length;
+			int node = deal[i];
+			std::vector<int>& b = begin[node];
+			std::vector<Node>& t = vset[node];
+			for (int j = -1; j < int(b.size()); j++)
+			{
+				for (int e = j + 1; e < b.size(); e++)
+				{
+					int pos1 = (j == -1 ? 0 : b[j]);
+					int bound1 = b[j + 1] - 1;
+					int pos2 = b[e] - 1;
+					int bound2 = ((e == b.size() - 1) ? t.size() - 1 : b[e + 1] - 1);
+					while (pos2 + 1 <= bound2 && t[pos1].depth + t[pos2 + 1].depth >= s)
+						pos2++;
+					int left = b[e];
+					int right = pos2;
+					for (; pos1 <= bound1; pos1++)
+					{
+						while (pos2 >= left && t[pos1].depth + t[pos2].depth < s)
+						{
+							pos2--;
+						}
+						if (add)
+						{
+							for (int g = left; g <= pos2; g++)
+							{
+								ans[++ans[0]] = t[pos1].depth + t[g].depth;
+								if (ans[0] >= k) return 0;
+							}
+						}
+						accum += pos2 - left + 1;
+						if (!add && accum >= c) return accum;
+					}
+				}
+			}
 		}
-	};
+		return accum;
+	}
 
 	work() : vis()
 	{
-		std::priority_queue<HeapNode> pq;
+		deal[0] = 0;
 		solve(1);
-		for (int i = 1; i <= n; i++)
-			if (vset[i].size() >= 2)
-				pq.push(HeapNode(i, 0, 1, vset[i][0].depth + vset[i][1].depth, true));
-		for (int i = 1; i <= k; )
-		{
-			HeapNode t = pq.top();
-			pq.pop();
-			if (t.a + 1 < t.b)
-				pq.push(HeapNode(t.center, t.a + 1, t.b, vset[t.center][t.a + 1].depth + vset[t.center][t.b].depth, false));
-			if (t.expand && t.b < vset[t.center].size() - 1)
-				pq.push(HeapNode(t.center, t.a, t.b + 1, vset[t.center][t.a].depth + vset[t.center][t.b + 1].depth, true));
 
-			if (vset[t.center][t.a].belong != vset[t.center][t.b].belong)
-			{
-				//printf("%d -> %d: ", vset[t.center][t.a].idx, vset[t.center][t.b].idx);
-				printOut(t.length);
-				i++;
-			}
+		std::reverse(deal + 1, deal + 1 + deal[0]);
+		int L;
+		L = INT_MAX;
+		LL sum = 0;
+		for (int i = 1; i <= n; i++)
+			wander(G, i)
+		{
+			DEF(G);
+			L = std::min(L, cost);
+			sum += cost;
 		}
+		sum >>= 1;
+		LL l = L, r = sum + 1;
+		while (r - l > 1)
+		{
+			LL mid = l + ((r - l) >> 1);
+			if (check(mid, k, false) < k)
+				r = mid;
+			else
+				l = mid;
+		}
+
+		ans[0] = 0;
+		check(l, k, true);
+		std::sort(ans + 1, ans + 1 + k, std::greater<LL>());
+		for (int i = 1; i <= ans[0]; i++)
+			printOut(ans[i]);
 	}
 };
 
