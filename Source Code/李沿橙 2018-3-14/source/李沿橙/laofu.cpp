@@ -70,34 +70,12 @@ struct People
 		return b < y.b;
 	}
 } people[maxn];
-int maxb;
+int maxa, maxb;
 
 #define RunInstance(x) delete new x
 struct brute
 {
 	brute()
-	{
-		std::sort(people + 1, people + 1 + n);
-		int cnt = 1;
-		std::vector<int> A;
-		for (int c = 1, to = maxb + 1; c <= to; c++)
-		{
-			while (cnt <= n && c > people[cnt].b)
-			{
-				A.insert(std::upper_bound(A.begin(), A.end(), people[cnt].a), people[cnt].a);
-				cnt++;
-			}
-			LL ans = 0;
-			for (int i = 0, size = A.size(); i < size; i++)
-				ans = std::max(ans, (LL)(size - i) * A[i]);
-			ans += (LL)(n - cnt + 1) * c * w;
-			printOut(ans);
-		}
-	}
-};
-struct brute2
-{
-	brute2()
 	{
 		std::sort(people + 1, people + 1 + n);
 		int cnt = 1;
@@ -121,9 +99,75 @@ struct brute2
 };
 struct work
 {
-	work()
+	int inBlock[maxn];
+	int lBegin[maxn];
+	int rEnd[maxn];
+	int sqrtN;
+	int N;
+	void initBlocks()
 	{
+		sqrtN = std::sqrt(maxa);
+		N = maxa / sqrtN + 1;
+		for (int i = 0; i <= maxa; i++)
+		{
+			int t = inBlock[i] = i / sqrtN;
+			if (!lBegin[t]) lBegin[t] = i;
+			rEnd[t] = i;
+		}
+	}
 
+	static const int maxN = 455;
+	std::deque<int> mono[maxN];
+	int tag[maxN];
+	LL val[maxn];
+	LL ans;
+
+	void maintain(int v)
+	{
+		int block = inBlock[v];
+		for (int i = 0; i < block; i++)
+		{
+			tag[i]++;
+			std::deque<int>& q = mono[i];
+			while (q.size() >= 2 && val[q.front()] + (LL)q.front() * tag[i] <= val[q[1]] + (LL)q[1] * tag[i])
+				q.pop_front();
+			if (q.size())
+				ans = std::max(ans, val[q.front()] + (LL)q.front() * tag[i]);
+		}
+		for (int i = lBegin[block], to = rEnd[block]; i <= to; i++)
+			val[i] += (LL)i * tag[block];
+		tag[block] = 0;
+		for (int i = lBegin[block]; i <= v; i++)
+			val[i] += i;
+
+		std::deque<int>& q = mono[block];
+		q.clear();
+		for (int i = lBegin[block], to = rEnd[block]; i <= to; i++)
+		{
+			while (q.size() >= 2 &&
+				(double)(val[q[q.size() - 2]] - val[q.back()]) / (q.back() - q[q.size() - 2]) > (double)(val[q.back()] - val[i]) / (i - q.back()))
+				q.pop_back();
+			q.push_back(i);
+			ans = std::max(ans, val[i]);
+		}
+	}
+
+	work() : lBegin(), tag(), val(), ans()
+	{
+		initBlocks();
+		std::sort(people + 1, people + 1 + n);
+
+		int cnt = 1;
+		for (int c = 1, to = maxb + 1; c <= to; c++)
+		{
+			while (cnt <= n && c > people[cnt].b)
+			{
+				int a = people[cnt].a;
+				cnt++;
+				maintain(a);
+			}
+			printOut(ans + (LL)(n - cnt + 1) * c * w);
+		}
 	}
 };
 
@@ -134,13 +178,14 @@ void run()
 	for (int i = 1; i <= n; i++)
 	{
 		people[i].read();
+		maxa = std::max(maxa, people[i].a);
 		maxb = std::max(maxb, people[i].b);
 	}
 
-	if (n <= 1000 && (LL)n * maxb <= LL(1e8))
+	if ((LL)n * maxb <= LL(1e8))
 		RunInstance(brute);
 	else
-		RunInstance(brute2);
+		RunInstance(work);
 }
 
 int main()
