@@ -23,110 +23,34 @@ typedef unsigned long long ULL;
 using std::cin;
 using std::cout;
 using std::endl;
-typedef LL INT_PUT;
+typedef int INT_PUT;
 INT_PUT readIn()
 {
-	INT_PUT a = 0;
-	bool positive = true;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
 	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
-	if (ch == '-')
-	{
-		positive = false;
-		ch = getchar();
-	}
-	while (std::isdigit(ch))
-	{
-		a = a * 10 - (ch - '0');
-		ch = getchar();
-	}
-	if (positive) a = -a;
-	return a;
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
+	return positive ? -a : a;
 }
 void printOut(INT_PUT x)
 {
-	char buffer[20];
-	int length = 0;
-	if (x < 0) putchar('-');
-	else x = -x;
-	do buffer[length++] = -(x % 10) + '0';
-	while (x /= 10);
-	do putchar(buffer[--length]);
-	while (length);
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
+	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
+	do putchar(buffer[--length]); while (length);
 }
 
+LL INF;
 const int maxn = 405;
 int n;
-LL v[maxn];
-LL w[maxn];
+int v[maxn];
+int w[maxn];
 
-#define RunInstance(x) delete new x
-struct brute
-{
-	std::map<std::vector<int>, LL> f;
-	LL search(std::vector<int> seq)
-	{
-		if (f.count(seq)) return f[seq];
-		LL& ans = f[seq];
-		ans = 0;
-		static int buf[maxn];
-		for (int i = 0; i < seq.size(); i++)
-		{
-			if (i) buf[i - 1] = seq[i - 1];
-			for (int j = i; j < seq.size(); j++)
-			{
-				if (j - i)
-					if (std::abs(seq[j] - seq[j - 1]) != 1)
-						break;
-				if (j - i >= 2)
-					if (!(2 * seq[j - 1] - seq[j] - seq[j - 2] >= 0))
-						break;
+LL f[maxn][maxn];
+LL g[maxn][maxn][2];
 
-				for (int k = j + 1, s = i; k < seq.size(); k++, s++)
-					buf[s] = seq[k];
-				ans = std::max(ans, v[j - i + 1] + search(std::vector<int>(buf, buf + (seq.size() - (j - i + 1)))));
-			}
-		}
-		return ans;
-	}
-	brute()
-	{
-		printOut(search(std::vector<int>(w + 1, w + 1 + n)));
-	}
-};
-struct cheat
-{
-	LL f[maxn][maxn];
-	LL DP(int l, int r)
-	{
-		LL& ans = f[l][r];
-		if (~ans) return ans;
-		ans = 0;
-		for (int i = l; i <= r; i++)
-		{
-			for (int j = i; j <= r; j++)
-			{
-				if (j - i)
-					if (std::abs(w[j] - w[j - 1]) != 1)
-						break;
-				if (j - i >= 2)
-					if (!(2 * w[j - 1] - w[j] - w[j - 2] >= 0))
-						break;
-				LL t = 0;
-				if (i > l) t += DP(l, i - 1);
-				if (j < r) t += DP(j + 1, r);
-				t += v[j - i + 1];
-				ans = std::max(ans, t);
-			}
-		}
-		return ans;
-	}
-	cheat()
-	{
-		memset(f, -1, sizeof(f));
-		printOut(DP(1, n));
-	}
-};
+LL ans[maxn];
 
 void run()
 {
@@ -135,11 +59,41 @@ void run()
 		v[i] = readIn();
 	for (int i = 1; i <= n; i++)
 		w[i] = readIn();
+	memset(&INF, -0x3f, sizeof(INF));
 
-	if (n <= 10)
-		RunInstance(brute);
-	else
-		RunInstance(cheat);
+	memset(f, -0x3f, sizeof(f));
+	memset(g, -0x3f, sizeof(g));
+	for (int i = 1; i <= n; i++)
+	{
+		g[i][i][0] = g[i][i][1] = 0;
+		f[i][i] = v[1];
+	}
+	for (int length = 2; length <= n; length++)
+	{
+		for (int l = 1; l + length - 1 <= n; l++)
+		{
+			int r = l + length - 1;
+			for (int i = l; i <= r; i++)
+			{
+				if (w[i] + 1 == w[r])
+					g[l][r][true] = g[l][i][true] != INF ? std::max(g[l][r][true], g[l][i][true] + (r - i == 1 ? 0 : f[i + 1][r - 1])) : g[l][r][true];
+				if (w[i] - 1 == w[r])
+					g[l][r][false] = g[l][i][false] != INF ? std::max(g[l][r][false], g[l][i][false] + (r - i == 1 ? 0 : f[i + 1][r - 1])) : g[l][r][false];
+			}
+			for (int i = l; i < r; i++)
+				f[l][r] = std::max(f[l][r], f[l][i] + f[i + 1][r]);
+			for (int i = l; i <= r; i++)
+				if (g[l][i][true] > INF + 100 && g[i][r][false] > INF + 100)
+					f[l][r] = std::max(f[l][r], g[l][i][true] + g[i][r][false] + v[w[i] - w[r] + w[i] - w[l] + 1]);
+		}
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		ans[i] = ans[i - 1];
+		for (int j = 0; j < i; j++)
+			ans[i] = std::max(ans[i], ans[j] + f[j + 1][i]);
+	}
+	printOut(ans[n]);
 }
 
 int main()
