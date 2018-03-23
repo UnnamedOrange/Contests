@@ -110,7 +110,7 @@ struct brute
 		}
 	}
 };
-struct cheat
+struct work
 {
 	struct BIT
 	{
@@ -188,7 +188,7 @@ struct cheat
 		return ret;
 	}
 
-	cheat() : prime(), isntPrime(), phi()
+	work() : prime(), isntPrime(), phi()
 	{
 		init();
 		for (int i = 1; i <= q; i++)
@@ -222,7 +222,7 @@ void run()
 	if (n <= 5)
 		RunInstance(brute);
 	else
-		RunInstance(cheat);
+		RunInstance(work);
 }
 
 int main()
