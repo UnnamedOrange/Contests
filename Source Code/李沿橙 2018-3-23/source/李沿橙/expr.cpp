@@ -133,11 +133,16 @@ struct Expression
 			}
 			else if (ch == '*')
 			{
+				while (!ops.empty() && ops.top() == MUL)
+				{
+					elements[size++] = Element(ops.top(), 0);
+					ops.pop();
+				}
 				ops.push(MUL);
 			}
 			else if (ch == '+' || ch == '-')
 			{
-				while (!ops.empty() && ops.top() == MUL)
+				while (!ops.empty() && ops.top() != LEFT)
 				{
 					elements[size++] = Element(ops.top(), 0);
 					ops.pop();

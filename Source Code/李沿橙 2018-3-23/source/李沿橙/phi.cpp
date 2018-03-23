@@ -182,6 +182,7 @@ struct cheat
 		{
 			if (x % t) continue;
 			(ret /= t) *= (t - 1);
+			while (!(x % t)) x /= t;
 		}
 		if (x != 1) (ret /= x) *= (x - 1);
 		return ret;
