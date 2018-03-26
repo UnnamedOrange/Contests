@@ -105,20 +105,7 @@ void run()
 	for (register int i = 1; i <= status[0]; i++)
 	{
 		int S = status[i];
-		int t = 1;
-		for (register int j = 1; j <= n; j++, S /= 3)
-		{
-			if (j == a[t])
-			{
-				if (S % 3 == 0)
-				{
-					t = -1;
-					break;
-				}
-				else t++;
-			}
-		}
-		if (~t) ans += f[status[i]];
+		ans += f[status[i]];
 	}
 	printOut(ans);
 }
