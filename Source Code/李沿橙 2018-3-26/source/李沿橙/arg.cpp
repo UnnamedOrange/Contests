@@ -23,109 +23,104 @@ typedef unsigned long long ULL;
 using std::cin;
 using std::cout;
 using std::endl;
-typedef LL INT_PUT;
+typedef long long INT_PUT;
 INT_PUT readIn()
 {
-	INT_PUT a = 0;
-	bool positive = true;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
 	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
-	if (ch == '-')
-	{
-		positive = false;
-		ch = getchar();
-	}
-	while (std::isdigit(ch))
-	{
-		a = a * 10 - (ch - '0');
-		ch = getchar();
-	}
-	if (positive) a = -a;
-	return a;
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
+	return positive ? -a : a;
 }
 void printOut(INT_PUT x)
 {
-	char buffer[20];
-	int length = 0;
-	if (x < 0) putchar('-');
-	else x = -x;
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
 	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
 	do putchar(buffer[--length]); while (length);
 }
 
-const int maxn = 20;
+const int maxn = 16;
 int n, m;
 int a[maxn];
+int b[maxn];
 
-#define RunInstance(x) delete new x
-struct brute
-{
-	brute()
-	{
-		LL ans = 0;
-		int per[maxn];
-		for (int i = 1; i <= n; i++)
-			per[i] = i;
-		do
-		{
-			int f[maxn];
-			int pre[maxn] = {};
-			int max = 0;
-			for (int i = 1; i <= n; i++)
-			{
-				f[i] = 1;
-				for (int j = 0; j < i; j++)
-				{
-					if (per[j] < per[i])
-					{
-						if (f[j] + 1 >= f[i] && (f[j] + 1 > f[i] || per[j] == a[f[j]]))
-						{
-							f[i] = f[j] + 1;
-							pre[i] = j;
-						}
-					}
-				}
-				max = std::max(max, f[i]);
-			}
-			if (max != m) continue;
-			int cnt;
-			for (cnt = 1; cnt <= n; cnt++)
-				if (per[cnt] == a[m]) break;
-			if (f[cnt] != max) continue;
-			bool bOk = true;
-			int t;
-			for (t = m; cnt && t; cnt = pre[cnt], t--)
-			{
-				if (per[cnt] != a[t])
-				{
-					bOk = false;
-					break;
-				}
-			}
-			if (cnt || t) bOk = false;
-			if (bOk) ans++;
-		} while (std::next_permutation(per + 1, per + 1 + n));
-		printOut(ans);
-	}
-};
-struct work
-{
-	work()
-	{
-		
-	}
-};
+LL f[14348907 + 5];
+int status[14348907 + 5];
 
 void run()
 {
 	n = readIn();
 	m = readIn();
 	for (int i = 1; i <= m; i++) a[i] = readIn();
+	for (int i = 1; i <= m; i++) b[a[i]] = 1;
+	int U = 1;
+	for (int i = 1; i <= n; i++) U *= 3;
+	f[0] = 1;
+	for (register int S = 0; S < U; S++) if (f[S]) // note
+	{
+		int appear[maxn] = {};
+		int cnt[3] = {};
+		int t = S;
+		for (register int i = 1; i <= n; i++)
+		{
+			appear[i] = t % 3;
+			t /= 3;
+			cnt[appear[i]]++;
+		}
+		if (cnt[1] == m && cnt[1] + cnt[2] == n) status[++status[0]] = S;
+		else if (cnt[1] > m) continue; // note
+		for (register int i = 1; i <= n; i++)
+		{
+			if (!appear[i])
+			{
+				int T = 0;
+				bool bFound = false;
+				int t = 1, q = 0;
+				for (int j = 1, base = 1; j <= n; j++, base *= 3)
+				{
+					if (appear[j])
+					{
+						if (j == a[t])
+							t++;
+						q += b[j];
+					}
 
-	if (n <= 9)
-		RunInstance(brute);
-	else
-		RunInstance(work);
+					if (i == j)
+						T += base;
+					else if (!bFound && j > i && appear[j] == 1)
+					{
+						T += (base << 1);
+						bFound = true;
+					}
+					else
+						T += base * appear[j];
+				}
+				if (t - 1 == q) f[T] += f[S];
+			}
+		}
+	}
+	LL ans = 0;
+	for (register int i = 1; i <= status[0]; i++)
+	{
+		int S = status[i];
+		int t = 1;
+		for (register int j = 1; j <= n; j++, S /= 3)
+		{
+			if (j == a[t])
+			{
+				if (S % 3 == 0)
+				{
+					t = -1;
+					break;
+				}
+				else t++;
+			}
+		}
+		if (~t) ans += f[status[i]];
+	}
+	printOut(ans);
 }
 
 int main()
