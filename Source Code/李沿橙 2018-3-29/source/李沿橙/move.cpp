@@ -26,7 +26,7 @@ using std::endl;
 typedef LL INT_PUT;
 INT_PUT readIn()
 {
-	int a = 0;
+	INT_PUT a = 0;
 	bool positive = true;
 	char ch = getchar();
 	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
@@ -77,10 +77,28 @@ LL C(LL down, LL up)
 	if (up > down) return 0;
 	return fac[down] * invFac[up] % mod * invFac[down - up] % mod;
 }
-LL Lucas(LL down, LL up)
+LL calc(LL a, LL b)
 {
-	if (!down) return 1;
-	return C(down % mod, up % mod) * Lucas(down / mod, up / mod);
+	if (a > b) std::swap(a, b);
+	LL ret = 0, power = 1;
+	for (int i = 0; i <= a; i++)
+	{
+		ret = (ret + C(a, i) * C(b, i) % mod * power) % mod;
+		power = (power << 1) % mod;
+	}
+	return ret;
+}
+
+void solve()
+{
+	LL ans = 1;
+	while (n || m)
+	{
+		ans = ans * calc(n % mod, m % mod) % mod;
+		n /= mod;
+		m /= mod;
+	}
+	printOut(ans);
 }
 
 void run()
@@ -103,8 +121,11 @@ void run()
 		printOut(0);
 		return;
 	}
-	LL remain = (n - m) >> 1;
-	LL ans = Lucas(m + remain, remain);
+	LL x = n;
+	LL y = m;
+	n = (x - y) >> 1;
+	m = (x + y) >> 1;
+	solve();
 }
 
 int main()
