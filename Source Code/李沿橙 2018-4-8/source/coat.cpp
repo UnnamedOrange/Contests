@@ -1,4 +1,3 @@
-#pragma GCC optimize(3)
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -72,33 +71,17 @@ struct work
 		int& operator[](int x) { return c[x]; }
 		const int& operator[](int x) const { return c[x]; }
 		void clear() { size = 1; c[0] = 0; }
-		void operator*=(const Poly& b)
+		void add(const Poly& b, bool mov) // mov: 是否乘以 x
 		{
 			Poly& a = *this;
-			static int temp[maxn];
-			int to = std::min(k + 1, a.size + b.size - 1);
-			for (register int i = 0; i < to; i++)
+			register int bsize = b.size + mov;
+			if (a.size < bsize)
 			{
-				temp[i] = 0;
-				LL sum = 0;
-				for (register int j = std::max(0, i - b.size + 1), t = std::min(a.size - 1, i); j <= t; j++)
-					sum += (LL)a[j] * b[i - j];
-				temp[i] = (temp[i] + sum) % mod;
-			}
-			memcpy(c, temp, sizeof(int) * to);
-			size = to;
-			while (size && !c[size - 1]) size--;
-		}
-		void add(const Poly& b, bool mov)
-		{
-			Poly& a = *this;
-			if (a.size < b.size + mov)
-			{
-				for (int i = a.size; i < b.size + mov; i++)
+				for (int i = a.size; i < bsize; i++)
 					a[i] = 0;
-				a.size = b.size + mov;
+				a.size = bsize;
 			}
-			int to = std::min(a.size, b.size + mov);
+			int to = std::min(a.size, bsize);
 			int temp;
 			if (!mov) a[0] = (temp = a[0] + b[0]) >= mod ? temp - mod : temp;
 			for (register int i = 1; i < to; i++)
@@ -108,13 +91,6 @@ struct work
 		{
 			size = b.size;
 			memcpy(c, b.c, sizeof(int) * size);
-		}
-		void times()
-		{
-			for (int i = size; i; i--)
-				c[i] = c[i - 1];
-			c[0] = 0;
-			size++;
 		}
 	};
 
@@ -138,7 +114,6 @@ struct work
 
 	int ans;
 	Poly polys[maxn];
-	Poly temp;
 	work() : ans()
 	{
 		for (int i = 1; i <= n; i++)
@@ -152,14 +127,8 @@ struct work
 			for (int j = n; j; j--)
 			{
 				int node = seq[j];
-				temp.clear();
-				temp[0] = 1;
-
-				temp *= polys[j + 1];
-				polys[j].clear();
-				polys[j][0] = 1;
-				polys[j] *= polys[end[node] + 1];
-				polys[j].add(temp, j == 1 || d[node] > val || (d[node] == val && node > i));
+				polys[j] = polys[end[node] + 1]; // 不选
+				polys[j].add(polys[j + 1], d[node] > val || (d[node] == val && node >= i)); // 选（加法原理）
 			}
 			if (polys[1].size > k)
 				ans = (ans + LL(val) * polys[1][k]) % mod;
