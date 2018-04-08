@@ -52,100 +52,115 @@ void printOut(INT_PUT x)
 	do putchar(buffer[--length]); while (length);
 }
 
+const int INF = (~(int(1) << (sizeof(int) * 8 - 1))) >> 1;
 const int maxn = 305;
 const int maxm = 1005;
 int n, m;
-struct Graph
+struct Networkflow
 {
 	struct Edge
 	{
-		int to;
-		int next;
-	} edges[maxm * 2];
-	int i;
-	int head[maxn];
-	int size[maxn];
-	Graph() : i(), size() { memset(head, -1, sizeof(head)); }
-	void addEdge(int from, int to)
+		int from, to, cap, flow;
+		Edge() {}
+		Edge(int from, int to, int cap) : from(from), to(to), cap(cap), flow() {}
+	};
+	std::vector<Edge> edges;
+	std::vector<std::vector<int> > G;
+	int s, t;
+	void addEdge(int from, int to, int cap)
 	{
-		size[from]++;
-		edges[i].to = to;
-		edges[i].next = head[from];
-		head[from] = i;
-		i++;
+		edges.push_back(Edge(from, to, cap));
+		edges.push_back(Edge(to, from, 0));
+		int i = edges.size();
+		G[from].push_back(i - 2);
+		G[to].push_back(i - 1);
 	}
-#define idx(x) idx_##x
-#define wander(G, node) for (int idx(G) = G.head[node]; ~idx(G); idx(G) = G.edges[idx(G)].next)
-#define DEF(G) const Graph::Edge& e = G.edges[idx(G)]; int to = e.to
-} G;
 
-#define RunInstance(x) delete new x
-struct brute
-{
-	static const int maxN = 15;
-	struct queue
+	int cur[maxn];
+	int level[maxn];
+	int DFS(int node, int opt)
 	{
-		int c[maxN];
-		int head, tail;
-		bool empty() { return head == tail; }
-		void clear() { head = tail = 0; }
-		void push(int x) { c[tail++] = x; }
-		void pop() { head++; }
-		int front() { return c[head]; }
-	} q;
-	int vis[maxn];
-
-	brute()
-	{
-		memset(vis, -1, sizeof(vis));
-		int ans = m;
-		int U = 1 << m;
-		for (int S = 0; S < U; S++)
+		if (node == t || !opt) return opt;
+		int flow = 0;
+		for (int& i = cur[node]; i < G[node].size(); i++)
 		{
-			q.clear();
-			q.push(1);
-			vis[1] = S;
-			int nVis = 1;
-			while (!q.empty())
+			Edge& e = edges[G[node][i]];
+			int t;
+			if (level[node] + 1 == level[e.to] && (t = DFS(e.to, std::min(opt, e.cap - e.flow))))
 			{
-				int from = q.front();
-				q.pop();
-				wander(G, from)
-				{
-					if (S & (1 << (idx(G) >> 1))) continue;
-					DEF(G);
-					if (vis[to] != S)
-					{
-						vis[to] = S;
-						nVis++;
-						q.push(to);
-					}
-				}
-			}
-
-			if (nVis != n)
-			{
-				int nDel = 0;
-				for (int i = 0; i < m; i++)
-					nDel += bool(S & (1 << i));
-				ans = std::min(ans, nDel);
+				flow += t;
+				opt -= t;
+				e.flow += t;
+				edges[G[node][i] ^ 1].flow -= t;
+				if (!opt) break;
 			}
 		}
-		printOut(ans);
+		return flow;
 	}
-};
-struct cheat
-{
-	cheat()
+
+	int vis[maxn];
+	int stamp;
+	bool BFS()
 	{
-		int minsize = 2 * m;
-		for (int i = 1; i <= n; i++)
-			minsize = std::min(minsize, G.size[i]);
-		if (minsize == 1) printOut(1);
-		else if (minsize == 2) printOut(2);
-		else printOut(1 + rand() % minsize);
+		stamp++;
+		std::queue<int> q;
+		q.push(s);
+		vis[s] = stamp;
+		level[s] = 0;
+		while (!q.empty())
+		{
+			int from = q.front();
+			q.pop();
+			for (int i = 0; i < G[from].size(); i++)
+			{
+				const Edge& e = edges[G[from][i]];
+				if (e.flow < e.cap && vis[e.to] != stamp)
+				{
+					vis[e.to] = stamp;
+					level[e.to] = level[from] + 1;
+					q.push(e.to);
+				}
+			}
+		}
+		return vis[t] == stamp;
 	}
-};
+
+	int Dinic()
+	{
+		int flow = 0;
+		while (BFS())
+		{
+			memset(cur, 0, sizeof(int) * (n + 1));
+			flow += DFS(s, INF);
+		}
+		return flow;
+	}
+
+	void reset()
+	{
+		for (int i = 0; i < edges.size(); i++)
+			edges[i].flow = 0;
+	}
+} nf;
+
+void GomoryHu()
+{
+	int parent[maxn];
+	for (int i = 2; i <= n; i++)
+		parent[i] = 1;
+	int ret = INF;
+	for (int i = 2; i <= n; i++)
+	{
+		nf.s = i;
+		nf.t = parent[i];
+		nf.reset();
+		ret = std::min(ret, nf.Dinic());
+		for (int j = i + 1; j <= n; j++)
+			if (parent[j] == nf.t && nf.vis[j] == nf.stamp)
+				parent[j] = nf.s;
+	}
+	printOut(ret);
+}
 
 void run()
 {
@@ -156,18 +171,17 @@ void run()
 		printOut(1);
 		return;
 	}
+
+	nf.G.resize(n + 1);
 	for (int i = 1; i <= m; i++)
 	{
 		int from = readIn();
 		int to = readIn();
-		G.addEdge(from, to);
-		G.addEdge(to, from);
+		nf.addEdge(from, to, 1);
+		nf.addEdge(to, from, 1);
 	}
 
-	if (m <= 20)
-		RunInstance(brute);
-	else
-		RunInstance(cheat);
+	GomoryHu();
 }
 
 int main()
