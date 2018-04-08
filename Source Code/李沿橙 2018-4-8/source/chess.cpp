@@ -82,25 +82,42 @@ struct cheat2
 		printOut(scoreA - scoreB);
 	}
 };
-struct brute1
+struct work
 {
-	int f[43046721 + 5];
+	int f[1 << 20];
 
-	int makeStatus(int bit[maxn])
+	LL makeStatus(int bit[maxn])
 	{
-		int ret = 0;
+		LL ret = 0;
 		for (int i = n; i; i--)
 			(ret *= (m + 1)) += bit[i];
 		return ret;
 	}
-	int DP(int S)
+	int calcHash(int bit[maxn])
 	{
-		if (f[S] != -1) return f[S];
-		int& ans = f[S];
-		if (!S)
-			return ans = 0;
-		int bit[maxn];
-		int t = S;
+		int ret = 0;
+		int cnt = 0;
+		for (int i = n; i >= 1; i--)
+		{
+			while (cnt <= bit[i])
+			{
+				cnt++;
+				ret <<= 1;
+			}
+			ret = ret << 1 | 1;
+		}
+		while (cnt <= bit[0])
+		{
+			cnt++;
+			ret <<= 1;
+		}
+		return ret;
+	}
+	LL U;
+	int DP(LL S)
+	{
+		int bit[maxn] = { m };
+		LL t = S;
 		int sum = 0;
 		for (int i = 1; i <= n; i++)
 		{
@@ -108,42 +125,46 @@ struct brute1
 			t /= (m + 1);
 			sum += bit[i];
 		}
-		if (sum & 1)
-		{
-			ans = INT_MAX;
-			for (int i = 1; i <= n; i++)
-			{
-				if (bit[i] && (i == n || bit[i] > bit[i + 1]))
-				{
-					bit[i]--;
-					int status = makeStatus(bit);
-					bit[i]++;
-					ans = std::min(ans, DP(status) + a[i][bit[i]]);
-				}
-			}
-		}
-		else
+		int& ans = f[calcHash(bit)];
+		if (ans != -1) return ans;
+		if (S == U - 1)
+			return ans = 0;
+		if (!(sum & 1)) // A ²Ù×÷
 		{
 			ans = INT_MIN;
 			for (int i = 1; i <= n; i++)
 			{
-				if (bit[i] && (i == n || bit[i] > bit[i + 1]))
+				if (bit[i] != m && (i == 1 || bit[i] < bit[i - 1]))
 				{
-					bit[i]--;
-					int status = makeStatus(bit);
 					bit[i]++;
-					ans = std::max(ans, DP(status) - b[i][bit[i]]);
+					LL status = makeStatus(bit);
+					ans = std::max(ans, DP(status) + a[i][bit[i]]);
+					bit[i]--;
+				}
+			}
+		}
+		else // B ²Ù×÷
+		{
+			ans = INT_MAX;
+			for (int i = 1; i <= n; i++)
+			{
+				if (bit[i] != m && (i == 1 || bit[i] < bit[i - 1]))
+				{
+					bit[i]++;
+					LL status = makeStatus(bit);
+					ans = std::min(ans, DP(status) - b[i][bit[i]]);
+					bit[i]--;
 				}
 			}
 		}
 		return ans;
 	}
 
-	brute1()
+	work()
 	{
-		int U = std::pow(m + 1, n);
-		memset(f, -1, sizeof(int) * U);
-		printOut(DP(U - 1));
+		U = std::pow(m + 1, n);
+		memset(f, -1, sizeof(f));
+		printOut(DP(0));
 	}
 };
 
@@ -162,8 +183,8 @@ void run()
 		RunInstance(cheat1);
 	else if (m == 1)
 		RunInstance(cheat2);
-	else if (std::pow(m + 1, n) <= double(1e8))
-		RunInstance(brute1);
+	else
+		RunInstance(work);
 }
 
 int main()
