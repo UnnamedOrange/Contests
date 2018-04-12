@@ -69,25 +69,25 @@ struct brute
 	bool inStack[maxN];
 	int stack[maxN];
 	LL ans;
-	
+
 	void Tarjan(int node)
 	{
 		clock++;
 		dfn[node] = low[node] = clock;
 		stack[++stack[0]] = node;
 		inStack[node] = true;
-		for(int i = 0; i < G[node].size(); i++)
+		for (int i = 0; i < G[node].size(); i++)
 		{
 			int to = G[node][i];
-			if(!dfn[to])
+			if (!dfn[to])
 			{
 				Tarjan(to);
 				low[node] = std::min(low[node], low[to]);
 			}
-			else if(inStack[to])
+			else if (inStack[to])
 				low[node] = std::min(low[node], dfn[to]);
 		}
-		if(dfn[node] == low[node])
+		if (dfn[node] == low[node])
 		{
 			N++;
 			int top;
@@ -106,19 +106,19 @@ struct brute
 		memset(low, 0, sizeof(low));
 		memset(inStack, 0, sizeof(inStack));
 		stack[0] = 0;
-		for(int i = 1; i <= n; i++)
-			if(!dfn[i]) Tarjan(i);
+		for (int i = 1; i <= n; i++)
+			if (!dfn[i]) Tarjan(i);
 		return N;
 	}
 	void search(int x = 1, int y = 2, LL accum = 1)
 	{
-		if(x == n)
+		if (x == n)
 		{
 			ans = (ans + accum * GetSC()) % mod;
 			return;
 		}
 		int newx = x, newy = y + 1;
-		if(y == n)
+		if (y == n)
 		{
 			newx = x + 1;
 			newy = newx + 1;
@@ -126,7 +126,7 @@ struct brute
 		G[x].push_back(y);
 		search(newx, newy, accum * rect[x][y] % mod);
 		G[x].pop_back();
-		
+
 		G[y].push_back(x);
 		search(newx, newy, accum * rect[y][x] % mod);
 		G[y].pop_back();
@@ -159,25 +159,25 @@ struct cheat
 	bool inStack[maxN];
 	int stack[maxN];
 	LL ans[maxN];
-	
+
 	void Tarjan(int node)
 	{
 		clock++;
 		dfn[node] = low[node] = clock;
 		stack[++stack[0]] = node;
 		inStack[node] = true;
-		for(int i = 0; i < G[node].size(); i++)
+		for (int i = 0; i < G[node].size(); i++)
 		{
 			int to = G[node][i];
-			if(!dfn[to])
+			if (!dfn[to])
 			{
 				Tarjan(to);
 				low[node] = std::min(low[node], low[to]);
 			}
-			else if(inStack[to])
+			else if (inStack[to])
 				low[node] = std::min(low[node], dfn[to]);
 		}
-		if(dfn[node] == low[node])
+		if (dfn[node] == low[node])
 		{
 			N++;
 			int top;
@@ -196,19 +196,19 @@ struct cheat
 		memset(low, 0, sizeof(low));
 		memset(inStack, 0, sizeof(inStack));
 		stack[0] = 0;
-		for(int i = 1; i <= n; i++)
-			if(!dfn[i]) Tarjan(i);
+		for (int i = 1; i <= n; i++)
+			if (!dfn[i]) Tarjan(i);
 		return N;
 	}
 	void search(int x = 1, int y = 2)
 	{
-		if(x == n)
+		if (x == n)
 		{
 			ans[GetSC()]++;
 			return;
 		}
 		int newx = x, newy = y + 1;
-		if(y == n)
+		if (y == n)
 		{
 			newx = x + 1;
 			newy = newx + 1;
@@ -216,7 +216,7 @@ struct cheat
 		G[x].push_back(y);
 		search(newx, newy);
 		G[x].pop_back();
-		
+
 		G[y].push_back(x);
 		search(newx, newy);
 		G[y].pop_back();
@@ -235,7 +235,7 @@ struct cheat
 	cheat() : ans()
 	{
 		search();
-		for(int i = 1; i <= n; i++)
+		for (int i = 1; i <= n; i++)
 			printOut(ans[i]);
 	}
 };
@@ -244,10 +244,10 @@ void run()
 {
 	n = readIn();
 	m = readIn();
-	for(int i = 1; i <= n; i++)
-		for(int j = 1; j <= n; j++)
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= n; j++)
 			rect[i][j] = 5000;
-	for(int i = 1; i <= m; i++)
+	for (int i = 1; i <= m; i++)
 	{
 		int from = readIn();
 		int to = readIn();
@@ -255,12 +255,12 @@ void run()
 		rect[from][to] = cost;
 		rect[to][from] = 10000 - cost;
 	}
-	
+
 	RunInstance(cheat);
-	
-	if(n == 1)
+
+	if (n == 1)
 		printOut(1);
-	else if(n <= 6)	
+	else if (n <= 6)
 		RunInstance(brute);
 	else
 	{

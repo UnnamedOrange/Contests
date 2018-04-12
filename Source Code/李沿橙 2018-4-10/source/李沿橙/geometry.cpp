@@ -79,10 +79,10 @@ void run()
 		up[i].read();
 	for (int i = 1; i <= n; i++)
 		down[i].read();
-	
-	if(n == 1)
+
+	if (n == 1)
 		RunInstance(cheat1);
-	
+
 }
 
 int main()
