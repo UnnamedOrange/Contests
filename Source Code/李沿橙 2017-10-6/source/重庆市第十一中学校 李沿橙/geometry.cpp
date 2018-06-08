@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cassert>
+#include <cctype>
+#include <climits>
+#include <ctime>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -12,71 +16,48 @@
 #include <map>
 #include <set>
 #include <bitset>
+#include <list>
+#include <functional>
+typedef long long LL;
+typedef unsigned long long ULL;
 using std::cin;
 using std::cout;
 using std::endl;
-typedef int INT;
-inline INT readIn()
+typedef int INT_PUT;
+INT_PUT readIn()
 {
-	INT a = 0;
-	bool minus = false;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
-	while (!(ch == '-' || ch >= '0' && ch <= '9')) ch = getchar();
-	if (ch == '-')
-	{
-		minus = true;
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		a *= 10;
-		a += ch;
-		a -= '0';
-		ch = getchar();
-	}
-	if (minus) a = -a;
-	return a;
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
+	return positive ? -a : a;
 }
-inline void printOut(INT x)
+void printOut(INT_PUT x)
 {
-	if(!x)
-	{
-		putchar('0');
-	}
-	else
-	{
-		char buffer[8];
-		INT length = 0;
-		while(x)
-		{
-			buffer[length++] = x % 10 + '0';
-			x /= 10;
-		}
-		do
-		{
-			putchar(buffer[--length]);
-		}
-		while(length);
-	}
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
+	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
+	do putchar(buffer[--length]); while (length);
 	putchar('\n');
 }
 
 double EPS = 1e-10;
-const INT maxn = INT(1e5) + 5;
-INT n, m;
-INT x[maxn];
-INT y[maxn];
-INT qx, qy;
+const int maxn = int(1e5) + 5;
+int n, m;
+int x[maxn];
+int y[maxn];
+int qx, qy;
 
-INT dcmp(double x)
+int dcmp(double x)
 {
-	if(std::abs(x) <= EPS) return 0;
+	if (std::abs(x) <= EPS) return 0;
 	return x < 0 ? -1 : 1;
 }
 
-bool check(INT s)
+bool check(int s)
 {
-	if(!s) return true;
+	if (!s) return true;
 	double stdY = (double)y[s] * (x[s] - qx) / x[s];
 	return dcmp(qy - stdY) >= 0;
 }
@@ -84,21 +65,21 @@ bool check(INT s)
 void run()
 {
 	n = readIn();
-	for(int i = 1; i <= n; i++) x[i] = readIn();
-	for(int i = 1; i <= n; i++) y[i] = readIn();
+	for (int i = 1; i <= n; i++) x[i] = readIn();
+	for (int i = 1; i <= n; i++) y[i] = readIn();
 	std::sort(x + 1, x + 1 + n);
 	std::sort(y + 1, y + 1 + n);
 	m = readIn();
-	while(m--)
+	while (m--)
 	{
 		qx = readIn();
 		qy = readIn();
 
-		INT l = 0, r = n + 1;
-		while(r - l > 1)
+		int l = 0, r = n + 1;
+		while (r - l > 1)
 		{
-			INT mid = l + ((r - l) >> 1);
-			if(check(mid))
+			int mid = l + ((r - l) >> 1);
+			if (check(mid))
 				l = mid;
 			else
 				r = mid;
@@ -109,7 +90,7 @@ void run()
 
 int main()
 {
-#ifndef JUDGE
+#ifndef LOCAL
 	freopen("geometry.in", "r", stdin);
 	freopen("geometry.out", "w", stdout);
 #endif

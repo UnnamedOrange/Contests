@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cassert>
+#include <cctype>
+#include <climits>
+#include <ctime>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -12,90 +16,89 @@
 #include <map>
 #include <set>
 #include <bitset>
+#include <list>
+#include <functional>
+typedef long long LL;
+typedef unsigned long long ULL;
 using std::cin;
 using std::cout;
 using std::endl;
-typedef int INT;
-inline INT readIn()
+typedef int INT_PUT;
+INT_PUT readIn()
 {
-	INT a = 0;
-	bool minus = false;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
-	while (!(ch == '-' || ch >= '0' && ch <= '9')) ch = getchar();
-	if (ch == '-')
-	{
-		minus = true;
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		a *= 10;
-		a += ch;
-		a -= '0';
-		ch = getchar();
-	}
-	if (minus) a = -a;
-	return a;
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
+	return positive ? -a : a;
+}
+void printOut(INT_PUT x)
+{
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
+	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
+	do putchar(buffer[--length]); while (length);
 }
 
-const INT maxn = 1005;
-const INT maxh = 24;
-INT a[maxh + 5];
-INT b[maxh + 5];
+const int maxn = 1005;
+const int maxh = 24;
+int a[maxh + 5];
+int b[maxh + 5];
 
 #define RunInstance(x, param...) delete new x(param)
 struct cheat1
 {
-	INT n;
-	INT st[30];
-	INT count1[1 << 20];
+	int n;
+	int st[30];
+	int count1[1 << 20];
 
 	cheat1() : n(), st(), count1()
 	{
-		for(int i = 1; i <= maxh; i++)
+		for (int i = 1; i <= maxh; i++)
 		{
-			for(int j = 1; j <= b[i]; j++)
+			for (int j = 1; j <= b[i]; j++)
 			{
 				st[n++] = i;
 			}
 		}
 
-		INT ans = -1;
-		INT U = 1 << n;
-		for(int i = 1; i < U; i++)
+		int ans = -1;
+		int U = 1 << n;
+		for (int i = 1; i < U; i++)
 		{
 			count1[i] = count1[i ^ (i & -i)] + 1;
 		}
-		for(int S = 0; S < U; S++)
+		for (int S = 0; S < U; S++)
 		{
-			if(~ans && count1[S] >= ans) continue;
-			INT sign[40] = { 0 };
-			for(int i = 0; i < n; i++)
+			if (~ans && count1[S] >= ans) continue;
+			int sign[40] = { 0 };
+			for (int i = 0; i < n; i++)
 			{
-				if(S & (1 << i))
+				if (S & (1 << i))
 				{
 					sign[st[i]]++;
 					sign[st[i] + 8]--;
 				}
 			}
-			for(int i = 1; i <= 32; i++)
+			for (int i = 1; i <= 32; i++)
 			{
 				sign[i] += sign[i - 1];
 			}
-			for(int i = 1; i <= 7; i++)
+			for (int i = 1; i <= 7; i++)
 			{
 				sign[i] += sign[i + maxh];
 			}
 			bool bOk = true;
-			for(int i = 1; i <= maxh; i++)
+			for (int i = 1; i <= maxh; i++)
 			{
-				if(sign[i] < a[i])
+				if (sign[i] < a[i])
 				{
 					bOk = false;
 					break;
 				}
 			}
-			if(!bOk) continue;
+			if (!bOk) continue;
 			ans = count1[S];
 		}
 		cout << ans << endl;
@@ -103,25 +106,25 @@ struct cheat1
 };
 struct work
 {
-	INT n;
+	int n;
 	struct Edge
 	{
-		INT to;
-		INT cost;
+		int to;
+		int cost;
 		Edge() {}
-		Edge(INT to, INT cost) : to(to), cost(cost) {}
+		Edge(int to, int cost) : to(to), cost(cost) {}
 	};
 	std::vector<Edge> edges[25];
 
-	INT build(INT b24)
+	int build(int b24)
 	{
-		for(int i = 0; i <= 24; i++) edges[i].clear();
-		for(int i = 0; i <= 16; i++)
+		for (int i = 0; i <= 24; i++) edges[i].clear();
+		for (int i = 0; i <= 16; i++)
 			edges[i].push_back(Edge(i + 8, a[i + 8]));
-		for(int i = 1; i <= 8; i++)
+		for (int i = 1; i <= 8; i++)
 			edges[i + 16].push_back(Edge(i, a[i] - b24));
 
-		for(int i = 1; i <= 24; i++)
+		for (int i = 1; i <= 24; i++)
 		{
 			edges[i].push_back(Edge(i - 1, -b[i]));
 			edges[i - 1].push_back(Edge(i, 0));
@@ -132,26 +135,26 @@ struct work
 	}
 
 	bool vis[25];
-	INT dis[25];
-	bool DFS(INT node)
+	int dis[25];
+	bool DFS(int node)
 	{
 		vis[node] = true;
-		for(int i = 0; i < edges[node].size(); i++)
+		for (int i = 0; i < edges[node].size(); i++)
 		{
 			Edge& e = edges[node][i];
-			if(dis[node] + e.cost > dis[e.to])
+			if (dis[node] + e.cost > dis[e.to])
 			{
 				dis[e.to] = dis[node] + e.cost;
-				if(vis[e.to])
+				if (vis[e.to])
 					return false;
-				else if(!DFS(e.to)) return false;
+				else if (!DFS(e.to)) return false;
 			}
 		}
 		vis[node] = false;
 		return true;
 	}
 
-	bool check(INT s)
+	bool check(int s)
 	{
 		build(s);
 		memset(vis, 0, sizeof(vis));
@@ -160,46 +163,44 @@ struct work
 		return DFS(0);
 	}
 
-	work(INT n) : n(n)
+	work(int n) : n(n)
 	{
-		INT l = 0;
-		INT r = n + 1;
-		while(r - l > 0)
+		int l = 0;
+		int r = n + 1;
+		while (r - l > 0)
 		{
-			INT mid = l + ((r - l) >> 1);
-			if(check(mid)) r = mid;
+			int mid = l + ((r - l) >> 1);
+			if (check(mid)) r = mid;
 			else l = mid + 1;
 		}
-		if(l == n + 1) l = -1; 
+		if (l == n + 1) l = -1;
 		cout << l << endl;
 	}
 };
 
 void run()
 {
-	INT T = readIn();
-	while(T--)
+	int T = readIn();
+	while (T--)
 	{
-		INT n = 0;
-		for(int i = 1; i <= maxh; i++)
+		int n = 0;
+		for (int i = 1; i <= maxh; i++)
 		{
 			a[i] = readIn();
 		}
-		for(int i = 1; i <= maxh; i++)
+		for (int i = 1; i <= maxh; i++)
 		{
 			b[i] = readIn();
 			n += b[i];
 		}
 
-//		if(n <= 20 && !T) RunInstance(cheat1);
-//		else
 		RunInstance(work, n);
 	}
 }
 
 int main()
 {
-#ifndef JUDGE
+#ifndef LOCAL
 	freopen("cashier.in", "r", stdin);
 	freopen("cashier.out", "w", stdout);
 #endif

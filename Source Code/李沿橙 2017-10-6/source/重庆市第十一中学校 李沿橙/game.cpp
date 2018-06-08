@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <cassert>
+#include <cctype>
+#include <climits>
+#include <ctime>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -12,331 +16,249 @@
 #include <map>
 #include <set>
 #include <bitset>
+#include <list>
+#include <functional>
+typedef long long LL;
+typedef unsigned long long ULL;
 using std::cin;
 using std::cout;
 using std::endl;
-typedef long long INT;
-inline INT readIn()
+typedef int INT_PUT;
+INT_PUT readIn()
 {
-	INT a = 0;
-	bool minus = false;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
-	while (!(ch == '-' || ch >= '0' && ch <= '9')) ch = getchar();
-	if (ch == '-')
-	{
-		minus = true;
-		ch = getchar();
-	}
-	while (ch >= '0' && ch <= '9')
-	{
-		a *= 10;
-		a += ch;
-		a -= '0';
-		ch = getchar();
-	}
-	if (minus) a = -a;
-	return a;
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
+	return positive ? -a : a;
 }
-inline void printOut(INT x)
+void printOut(INT_PUT x)
 {
-	if(!x)
-	{
-		putchar('0');
-	}
-	else
-	{
-		char buffer[12];
-		INT length = 0;
-		bool minus = x < 0;
-		x = x < 0 ? -x : x;
-		while(x)
-		{
-			buffer[length++] = x % 10 + '0';
-			x /= 10;
-		}
-		if(minus)
-		{
-			buffer[length++] = '-';
-		}
-		do
-		{
-			putchar(buffer[--length]);
-		}
-		while(length);
-	}
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
+	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
+	do putchar(buffer[--length]); while (length);
 	putchar('\n');
 }
 
-const INT mod = INT(1e9) + 7;
-const INT maxn = 50005;
-INT n, m;
-INT origin[maxn];
-struct InsSet
+const int mod = int(1e9) + 7;
+const int maxn = int(5e4) + 5;
+int n, m;
+int origin[maxn];
+
+int C[maxn][11];
+class SegTree
 {
-	struct Ins
+	static inline int code(int l, int r)
 	{
-		INT type;
-		union
-		{
-			struct
-			{
-				INT l, r, val;
-			} add;
-			struct
-			{
-				INT l, r;
-			} minus;
-			struct
-			{
-				INT l, r, k;
-			} query;
-		};
-	} ins[maxn];
-
-	bool haveMinus;
-	INT maxK;
-
-	InsSet() : haveMinus(), maxK() {}
-	Ins& operator[] (INT x)
-	{
-		return ins[x];
+		return (l + r) | (l != r);
 	}
-	void read(INT i)
+	struct Node
 	{
-		ins[i].type = readIn();
-		if(ins[i].type == 1)
+		int f[11];
+		bool bLazyFlip;
+		int iLazyAdd;
+	} nodes[maxn * 2];
+
+	void update(int l, int r)
+	{
+		Node& cnt = nodes[code(l, r)];
+		int mid = (l + r) >> 1;
+		Node& lc = nodes[code(l, mid)];
+		Node& rc = nodes[code(mid + 1, r)];
+		for (int i = 0; i <= 10; i++)
 		{
-			ins[i].add.l = readIn();
-			ins[i].add.r = readIn();
-			ins[i].add.val = readIn();
-		}
-		else if(ins[i].type == 2)
-		{
-			ins[i].minus.l = readIn();
-			ins[i].minus.r = readIn();
-			haveMinus = true;
-		}
-		else if(ins[i].type == 3)
-		{
-			ins[i].query.l = readIn();
-			ins[i].query.r = readIn();
-			ins[i].query.k = readIn();
-			maxK = std::max(maxK, ins[i].query.k);
+			cnt.f[i] = 0;
+			for (int j = 0; j <= i; j++)
+				cnt.f[i] = (cnt.f[i] + (LL)lc.f[j] * rc.f[i - j]) % mod;
 		}
 	}
-} ins;
-
-#define RunInstance(x) delete new x
-struct cheat2
-{
-	class SegTree
+	void coverFlip(int l, int r)
 	{
-		struct Node
+		Node& cnt = nodes[code(l, r)];
+		for (int i = 1; i <= 10; i += 2)
 		{
-			INT sum;
-
-			INT add;
-			bool minus;
-
-			Node() : sum(), add(), minus() {}
-		} nodes[131080];
-
-#define PARAM INT node, INT l, INT r
-#define DEF INT mid = (l + r) >> 1; INT lc = node << 1; INT rc = lc | 1
-
-		INT g_L, g_R, g_Val;
-		void pushDown(PARAM)
-		{
-			DEF;
-			if(nodes[node].add)
-			{
-				nodes[lc].sum += nodes[node].add * (mid - l + 1);
-				nodes[rc].sum += nodes[node].add * (r - mid);
-				nodes[lc].add += nodes[node].add;
-				nodes[rc].add += nodes[node].add;
-				nodes[node].add = 0;
-			}
-			if(nodes[node].minus)
-			{
-				nodes[lc].sum = -nodes[lc].sum;
-				nodes[rc].sum = -nodes[rc].sum;
-				nodes[lc].minus = !nodes[lc].minus;
-				nodes[rc].minus = !nodes[rc].minus;
-				nodes[node].minus = false;
-			}
+			register int t = mod - cnt.f[i];
+			cnt.f[i] = t == mod ? 0 : t;
 		}
-
-		void add_(PARAM)
-		{
-			if(l != r) pushDown(node, l, r);
-			if(g_L <= l && r <= g_R)
-			{
-				nodes[node].sum += g_Val * (r - l + 1);
-				nodes[node].add += g_Val;
-				return;
-			}
-			DEF;
-			if(g_L <= mid) add_(lc, l, mid);
-			if(g_R > mid) add_(rc, mid + 1, r);
-			nodes[node].sum = nodes[lc].sum + nodes[rc].sum;
-		}
-		void minus_(PARAM)
-		{
-			if(l != r) pushDown(node, l, r);
-			if(g_L <= l && r <= g_R)
-			{
-				nodes[node].sum = -nodes[node].sum;
-				nodes[node].minus = true;
-				return;
-			}
-			DEF;
-			if(g_L <= mid) minus_(lc, l, mid);
-			if(g_R > mid) minus_(rc, mid + 1, r);
-			nodes[node].sum = nodes[lc].sum + nodes[rc].sum;
-		}
-		INT query_(PARAM)
-		{
-			if(g_L <= l && r <= g_R)
-			{
-				return nodes[node].sum;
-			}
-			pushDown(node, l, r);
-			DEF;
-			INT ret = 0;
-			if(g_L <= mid) ret += query_(lc, l, mid);
-			if(g_R > mid) ret += query_(rc, mid + 1, r);
-			return ret;
-		}
-
-	public:
-		void build(PARAM)
-		{
-			if(l == r)
-			{
-				nodes[node].sum = origin[l];
-				return;
-			}
-			DEF;
-			build(lc, l, mid);
-			build(rc, mid + 1, r);
-			nodes[node].sum = nodes[lc].sum + nodes[rc].sum;
-		}
-		void add(INT l, INT r, INT val)
-		{
-			g_L = l;
-			g_R = r;
-			g_Val = val;
-			add_(1, 1, n);
-		}
-		void minus(INT l, INT r)
-		{
-			g_L = l;
-			g_R = r;
-			minus_(1, 1, n);
-		}
-		INT query(INT l, INT r)
-		{
-			g_L = l;
-			g_R = r;
-			return query_(1, 1, n);
-		}
-	} st;
-
-	cheat2()
+		cnt.bLazyFlip = !cnt.bLazyFlip;
+		cnt.iLazyAdd = (mod - cnt.iLazyAdd) % mod;
+	}
+	void coverAdd(int l, int r, int v)
 	{
-		st.build(1, 1, n);
-		for(int o = 1; o <= m; o++)
+		if (!v) return;
+		Node& cnt = nodes[code(l, r)];
+		int f[11];
+		std::memcpy(f, cnt.f, sizeof(f));
+		std::memset(cnt.f, 0, sizeof(cnt.f));
+		register int len = r - l + 1;
+
+		for (int i = 0, to = std::min(len, 10); i <= to; i++)
 		{
-			if(ins[o].type == 1)
-			{
-				st.add(ins[o].add.l, ins[o].add.r, ins[o].add.val);
-			}
-			else if(ins[o].type == 2)
-			{
-				st.minus(ins[o].add.l, ins[o].add.r);
-			}
-			else if(ins[o].type == 3)
-			{
-				printOut((st.query(ins[o].query.l, ins[o].query.r) % mod + mod) % mod);
-			}
+			int c = 1;
+			int& t = cnt.f[i];
+			for (int j = i; ~j; j--, c = (LL)c * v % mod)
+				t = (t + (LL)c * f[j] % mod * C[len - j][i - j]) % mod;
+		}
+		register int t = cnt.iLazyAdd + v;
+		cnt.iLazyAdd = t >= mod ? t - mod : t;
+	}
+	void pushdown(int l, int r)
+	{
+		Node& cnt = nodes[code(l, r)];
+		int mid = (l + r) >> 1;
+		if (cnt.bLazyFlip)
+		{
+			coverFlip(l, mid);
+			coverFlip(mid + 1, r);
+			cnt.bLazyFlip = false;
+		}
+		if (cnt.iLazyAdd)
+		{
+			coverAdd(l, mid, cnt.iLazyAdd);
+			coverAdd(mid + 1, r, cnt.iLazyAdd);
+			cnt.iLazyAdd = 0;
 		}
 	}
-};
-struct cheat1
-{
-	cheat1()
+	int g_L, g_R, g_Val;
+	void flip_(int l, int r)
 	{
-		for(int o = 1; o <= m; o++)
+		if (g_L <= l && r <= g_R)
 		{
-			if(ins[o].type == 1)
-			{
-				for(int i = ins[o].add.l; i <= ins[o].add.r; i++)
-				{
-					origin[i] += ins[o].add.val;
-				}
-			}
-			else if(ins[o].type == 2)
-			{
-				for(int i = ins[o].minus.l; i <= ins[o].minus.r; i++)
-				{
-					origin[i] = -origin[i];
-				}
-			}
-			else if(ins[o].type == 3)
-			{
-				INT ans = 0;
-				INT sum = 0;
-				for(int i = ins[o].query.l; i <= ins[o].query.r; i++)
-				{
-					sum = (sum + origin[i] % mod + mod) % mod;
-				}
-				if(ins[o].query.k == 1)
-				{
-					ans = sum;
-				}
-				else if(ins[o].query.k == 2)
-				{
-					for(int i = ins[o].query.l; i <= ins[o].query.r; i++)
-					{
-						ans = (ans + (sum - origin[i]) % mod * origin[i] % mod + mod) % mod;
-					}
-					ans = ans * 500000004 % mod;
-				}
-				printOut(ans);
-			}
+			coverFlip(l, r);
+			return;
 		}
+		pushdown(l, r);
+		int mid = (l + r) >> 1;
+		if (g_L <= mid) flip_(l, mid);
+		if (g_R > mid) flip_(mid + 1, r);
+		update(l, r);
 	}
-};
-struct work
-{
-	work()
+	void add_(int l, int r)
 	{
-
+		if (g_L <= l && r <= g_R)
+		{
+			coverAdd(l, r, g_Val);
+			return;
+		}
+		pushdown(l, r);
+		int mid = (l + r) >> 1;
+		if (g_L <= mid) add_(l, mid);
+		if (g_R > mid) add_(mid + 1, r);
+		update(l, r);
 	}
-};
+	int gen[11];
+	void query_(int l, int r)
+	{
+		if (g_L <= l && r <= g_R)
+		{
+			int* f = nodes[code(l, r)].f;
+			int temp[11] = {};
+			for (int i = 0; i <= g_Val; i++)
+				for (int j = 0; j <= i; j++)
+					temp[i] = (temp[i] + (LL)gen[j] * f[i - j]) % mod;
+			for (register int i = 0; i <= g_Val; i++)
+				gen[i] = temp[i];
+			return;
+		}
+		pushdown(l, r);
+		int mid = (l + r) >> 1;
+		if (g_L <= mid) query_(l, mid);
+		if (g_R > mid) query_(mid + 1, r);
+	}
+
+public:
+	void build(int l, int r)
+	{
+		if (l == r)
+		{
+			Node& t = nodes[l << 1];
+			std::memset(t.f, 0, sizeof(t.f));
+			t.f[0] = 1;
+			t.f[1] = origin[l];
+			return;
+		}
+		int mid = (l + r) >> 1;
+		build(l, mid);
+		build(mid + 1, r);
+		update(l, r);
+	}
+	void flip(int l, int r)
+	{
+		g_L = l;
+		g_R = r;
+		flip_(1, n);
+	}
+	void add(int l, int r, int v)
+	{
+		g_L = l;
+		g_R = r;
+		g_Val = v;
+		add_(1, n);
+	}
+	int query(int l, int r, int k)
+	{
+		g_L = l;
+		g_R = r;
+		g_Val = k;
+		std::memset(gen, 0, sizeof(gen));
+		gen[0] = 1;
+		query_(1, n);
+		return gen[k];
+	}
+} st;
 
 void run()
 {
 	n = readIn();
 	m = readIn();
-	for(int i = 1; i <= n; i++)
+	C[0][0] = 1;
+	for (int i = 1; i <= n; i++)
 	{
-		origin[i] = readIn();
-	}
-	for(int i = 1; i <= m; i++)
-	{
-		ins.read(i);
+		C[i][0] = 1;
+		register int t;
+		for (int j = 1, to = std::min(i, 10); j <= to; j++)
+			C[i][j] = (t = C[i - 1][j - 1] + C[i - 1][j]) >= mod ? t - mod : t;
 	}
 
-	if(n * m <= 100 * 50000 && ins.maxK <= 2)
-		RunInstance(cheat1);
-	else if(ins.maxK <= 1) RunInstance(cheat2);
-	else RunInstance(work);
+	for (int i = 1; i <= n; i++)
+	{
+		register int t = readIn();
+		origin[i] = t < 0 ? t + mod : t;
+	}
+	st.build(1, n);
+
+	while (m--)
+	{
+		int type = readIn();
+		if (type == 1)
+		{
+			int l = readIn();
+			int r = readIn();
+			int x = readIn() + mod;
+			if (x >= mod) x -= mod;
+			st.add(l, r, x);
+		}
+		else if (type == 2)
+		{
+			int l = readIn();
+			int r = readIn();
+			st.flip(l, r);
+		}
+		else if (type == 3)
+		{
+			int l = readIn();
+			int r = readIn();
+			int k = readIn();
+			printOut(st.query(l, r, k));
+		}
+	}
 }
 
 int main()
 {
-#ifndef JUDGE
+#ifndef LOCAL
 	freopen("game.in", "r", stdin);
 	freopen("game.out", "w", stdout);
 #endif
