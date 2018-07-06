@@ -127,7 +127,7 @@ struct Min_25
 			{
 				int power = p;
 				for (int e = 1; p <= appear[i] / power; e++, power *= p)
-					s[i] = (s[i] + (LL)inv[e + 1] * (s[getId(appear[i] / power)] - (LL)s[getId(p)] % mod) % mod + inv[e + 2] + mod) % mod;
+					s[i] = (s[i] + (LL)inv[e + 1] * (s[getId(appear[i] / power)] - ((LL)inv[2] * j % mod)) % mod + inv[e + 2] + mod) % mod;
 			}
 	}
 
