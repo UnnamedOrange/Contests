@@ -26,28 +26,17 @@ using std::endl;
 typedef int INT_PUT;
 INT_PUT readIn()
 {
-	INT_PUT a = 0;
-	bool positive = true;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
-	while (!(std::isdigit(ch) || ch == '-')) ch = getchar();
-	if (ch == '-')
-	{
-		positive = false;
-		ch = getchar();
-	}
-	while (std::isdigit(ch))
-	{
-		(a *= 10) -= ch - '0';
-		ch = getchar();
-	}
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
 	return positive ? -a : a;
 }
 void printOut(INT_PUT x)
 {
-	char buffer[20];
-	int length = 0;
-	if (x < 0) putchar('-');
-	else x = -x;
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
 	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
 	do putchar(buffer[--length]); while (length);
 }
@@ -55,7 +44,7 @@ void printOut(INT_PUT x)
 const int maxn = int(2e5) + 5;
 int n;
 char str[maxn];
-LL val[maxn];
+int val[maxn];
 
 struct SuffixArray
 {
@@ -133,16 +122,15 @@ struct SuffixArray
 
 int* sa;
 int* height;
+std::vector<std::pair<int, int> > ans;
 
 #define RunInstance(x) delete new x
 struct brute
 {
-	std::vector<std::pair<int, int> > ans;
-
 	brute()
 	{
-		LL all = n - sa[0];
-		for (int i = 1; i < n; i++)
+		LL all = 0;
+		for (int i = 0; i < n; i++)
 			all += n - sa[i] - height[i];
 
 		LL rank = 0;
@@ -160,15 +148,122 @@ struct brute
 				} while (k < n && height[k] > j);
 			}
 		}
-		std::sort(ans.begin(), ans.end());
-		printOut(ans.size());
-		putchar('\n');
-		for (int i = 0; i < ans.size(); i++)
+	}
+};
+struct work
+{
+	class SegTree
+	{
+		static inline int code(int l, int r)
 		{
-			printOut(ans[i].first);
-			putchar(' ');
-			printOut(ans[i].second);
-			putchar('\n');
+			return (l + r) | (l != r);
+		}
+		struct Node
+		{
+			LL min;
+			bool bFlag;
+			LL a;
+			int d;
+			Node() : min(), bFlag(), a(), d() {}
+		} nodes[maxn * 2];
+
+		int g_L, g_R, g_Pos, g_Val;
+		void cover(int l, int r, LL a, int d)
+		{
+			Node& t = nodes[code(l, r)];
+			t.min = a + (r - l) * d;
+			t.bFlag = true;
+			t.a = a;
+			t.d = d;
+		}
+		void pushdown(int l, int r)
+		{
+			Node& t = nodes[code(l, r)];
+			if (t.bFlag)
+			{
+				int mid = (l + r) >> 1;
+				cover(l, mid, t.a, t.d);
+				cover(mid + 1, r, t.a + t.d * (mid - l + 1), t.d);
+				t.bFlag = false;
+			}
+		}
+		void update(int l, int r)
+		{
+			Node& t = nodes[code(l, r)];
+			int mid = (l + r) >> 1;
+			Node& lc = nodes[code(l, mid)];
+			Node& rc = nodes[code(mid + 1, r)];
+			t.min = std::min(lc.min, rc.min);
+		}
+		void modify_(int l, int r, LL a)
+		{
+			if (g_L <= l && r <= g_R)
+			{
+				cover(l, r, a, g_Val);
+				return;
+			}
+			pushdown(l, r);
+			int mid = (l + r) >> 1;
+			if (g_R <= mid)
+				modify_(l, mid, a);
+			else if (g_L > mid)
+				modify_(mid + 1, r, a);
+			else
+			{
+				modify_(l, mid, a);
+				modify_(mid + 1, r, a + g_Val * (mid - std::max(l, g_L) + 1));
+			}
+			update(l, r);
+		}
+		void query_(int l, int r)
+		{
+			if (l == r)
+			{
+				Node& t = nodes[code(l, r)];
+				if (val[g_Pos + l] - g_Val == t.min)
+					ans.push_back(std::make_pair(g_Pos + 1, g_Pos + l));
+				return;
+			}
+			pushdown(l, r);
+			int mid = (l + r) >> 1;
+			if (g_R <= mid)
+				return void(query_(l, mid));
+			Node& lc = nodes[code(l, mid)];
+			if (lc.min > val[g_Pos + mid] - g_Val)
+				query_(mid + 1, r);
+			else
+				query_(l, mid);
+		}
+
+	public:
+		void modify(int l, int r, LL a, int d)
+		{
+			g_L = l;
+			g_R = r;
+			g_Val = d;
+			modify_(1, n, a);
+		}
+		void query(int r, int base, int sub)
+		{
+			g_L = 1;
+			g_R = r;
+			g_Pos = base;
+			g_Val = sub;
+			query_(1, n);
+		}
+	} st;
+
+	work()
+	{
+		LL all = 0;
+		for (int i = 0; i < n; i++)
+			all += n - sa[i] - height[i];
+
+		for (int i = 0; i < n; i++)
+		{
+			st.modify(height[i] + 1, n - sa[i], all, -1);
+			st.query(n - sa[i], sa[i], val[sa[i]]);
+			all -= n - sa[i] - height[i];
 		}
 	}
 };
@@ -187,6 +282,19 @@ void run()
 
 	if (n <= 1000)
 		RunInstance(brute);
+	else
+		RunInstance(work);
+
+	std::sort(ans.begin(), ans.end());
+	printOut(ans.size());
+	putchar('\n');
+	for (int i = 0; i < ans.size(); i++)
+	{
+		printOut(ans[i].first);
+		putchar(' ');
+		printOut(ans[i].second);
+		putchar('\n');
+	}
 }
 
 int main()
