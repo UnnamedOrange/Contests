@@ -26,28 +26,17 @@ using std::endl;
 typedef LL INT_PUT;
 INT_PUT readIn()
 {
-	INT_PUT a = 0;
-	bool positive = true;
+	INT_PUT a = 0; bool positive = true;
 	char ch = getchar();
-	while (!(std::isdigit(ch) || ch == '-')) ch = getchar();
-	if (ch == '-')
-	{
-		positive = false;
-		ch = getchar();
-	}
-	while (std::isdigit(ch))
-	{
-		(a *= 10) -= ch - '0';
-		ch = getchar();
-	}
+	while (!(ch == '-' || std::isdigit(ch))) ch = getchar();
+	if (ch == '-') { positive = false; ch = getchar(); }
+	while (std::isdigit(ch)) { a = a * 10 - (ch - '0'); ch = getchar(); }
 	return positive ? -a : a;
 }
 void printOut(INT_PUT x)
 {
-	char buffer[20];
-	int length = 0;
-	if (x < 0) putchar('-');
-	else x = -x;
+	char buffer[20]; int length = 0;
+	if (x < 0) putchar('-'); else x = -x;
 	do buffer[length++] = -(x % 10) + '0'; while (x /= 10);
 	do putchar(buffer[--length]); while (length);
 	putchar('\n');
