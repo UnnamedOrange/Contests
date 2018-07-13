@@ -1,0 +1,9 @@
+HNOI2018 day2t3
+改成任选n-1条边
+
+subtask1:n<=12 10'
+subtask2:n<=200 20'
+subtask3:n<=2000 30'
+subtask4:同原题 40'
+
+n≤20000 ， 1≤ai,bi≤601 \le a_i,b_i \le 601≤ai​,bi​≤60 ， 1≤ci≤1091 \le c_i \le 10^91≤ci​≤109 ， si,tis_i,t_isi​,ti​ 是 [−n,−1]∪(i,n−1][-n,-1] \cup (i,n - 1][−n,−1]∪(i,n−1] 内的整数，任意乡村可以通过不超过40条道路到达首都。
