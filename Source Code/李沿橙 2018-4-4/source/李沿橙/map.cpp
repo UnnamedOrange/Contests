@@ -61,21 +61,23 @@ struct Graph
 	{
 		int to;
 		int next;
-	} edges[maxm * 2];
+		bool unavailable;
+		bool isSquare;
+	} edges[maxm * 4];
 	int i;
-	int head[maxn];
-	int size[maxn];
-	Graph() : i(), size() { memset(head, -1, sizeof(head)); }
-	void addEdge(int from, int to)
+	int head[maxn * 2];
+	Graph() : i() { memset(head, -1, sizeof(head)); }
+	void addEdge(int from, int to, bool isSquare)
 	{
-		size[from]++;
 		edges[i].to = to;
 		edges[i].next = head[from];
+		edges[i].unavailable = false;
+		edges[i].isSquare = isSquare;
 		head[from] = i;
 		i++;
 	}
 #define idx(x) idx_##x
-#define wander(G, node) for (int idx(G) = G.head[node]; ~idx(G); idx(G) = G.edges[idx(G)].next)
+#define wander(G, node) for (int idx(G) = G.head[node]; ~idx(G); idx(G) = G.edges[idx(G)].next) if (!G.edges[idx(G)].unavailable && !G.edges[idx(G) ^ 1].unavailable)
 #define DEF(G) const Graph::Edge& e = G.edges[idx(G)]; int to = e.to
 } G;
 
@@ -108,7 +110,7 @@ struct Query
 		limit = readIn();
 	}
 } querys[maxn];
-std::vector<int> offline[maxn];
+std::vector<int> offline[maxn * 2];
 
 class SegTree
 {
@@ -295,11 +297,77 @@ struct cheat
 		}
 	}
 };
-struct brute
+struct work
 {
-	brute()
-	{
+	SegTree st[maxn * 2];
+	int isSquare[maxn * 2]; // square vertex
 
+	int stackv[maxn * 2]; // vertex
+	int stacke[maxm * 2]; // edge
+	bool vise[maxm * 2]; // edge in original graph
+	bool vis[maxn * 2];
+	void Tarjan(int node)
+	{
+		if (vis[node]) // build square vertex
+		{
+			isSquare[++n] = true;
+			for (int i = stackv[0], j = stacke[0]; i && j; i--, j--)
+			{
+				int v = stackv[i];
+				int e = stacke[j];
+				G.edges[e].unavailable = G.edges[e ^ 1].unavailable = true;
+				G.addEdge(v, n, true);
+				G.addEdge(n, v, true);
+				if (node == v) break;
+			}
+			return;
+		}
+		vis[node] = true;
+		stackv[++stackv[0]] = node;
+		wander(G, node) if (!G.edges[idx(G)].isSquare && !vise[idx(G)])
+		{
+			DEF(G);
+			vise[idx(G)] = vise[idx(G) ^ 1] = true;
+			stacke[++stacke[0]] = idx(G);
+			Tarjan(to);
+			stacke[0]--;
+		}
+		stackv[0]--;
+	}
+
+	void DFS(int node)
+	{
+		vis[node] = true;
+		if (!isSquare[node]) st[node].add(a[node]);
+		wander(G, node)
+		{
+			DEF(G);
+			if (vis[to]) continue;
+			DFS(to);
+			SegTree::merge(st[node], st[to]);
+		}
+		for (int j = 0; j < offline[node].size(); j++)
+		{
+			Query& Q = querys[offline[node][j]];
+			if (Q.ty == 1) // odd
+			{
+				Q.ans = st[node].queryOdd(1, locate(Q.limit));
+			}
+			else if (Q.ty == 0)
+			{
+				Q.ans = st[node].queryEven(1, locate(Q.limit));
+			}
+		}
+	}
+
+	work() : isSquare(), vis(), vise()
+	{
+		stackv[0] = stacke[0] = 0;
+		Tarjan(1);
+		std::memset(vis, 0, sizeof(vis));
+		DFS(1);
+		for (int i = 1; i <= q; i++)
+			printOut(querys[i].ans);
 	}
 };
 
@@ -314,7 +382,8 @@ void run()
 	{
 		int from = readIn();
 		int to = readIn();
-		G.addEdge(from, to);
+		G.addEdge(from, to, false);
+		G.addEdge(to, from, false);
 	}
 	q = readIn();
 	for (int i = 1; i <= q; i++)
@@ -326,7 +395,7 @@ void run()
 	if (m + 1 == n)
 		RunInstance(cheat);
 	else
-		RunInstance(brute);
+		RunInstance(work);
 }
 
 int main()
