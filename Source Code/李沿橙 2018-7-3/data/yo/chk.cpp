@@ -18,7 +18,7 @@ ld go (ld u, ld v) { return v + eps > u ? v - u : v - u + 2 * PI; }
 bool vis[N];
 
 int main(int argc, char *argv[]) {
-	registerLemonChecker(argc, argv);
+	registerTestlibCmd(argc, argv);
 	int your_ans = ouf.readInt(), std_ans = ans.readInt();
 	if (your_ans < std_ans) quitf(_wa, "your answer is smaller than std");
 	int i, j, k, x, y;
